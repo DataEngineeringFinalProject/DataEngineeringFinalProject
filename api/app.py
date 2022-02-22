@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import numpy as np
-from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
-from transformers import pipeline
+from detoxify import Detoxify
+import torch
 
 app = Flask(__name__)
 
@@ -11,22 +11,18 @@ def makecalc():
     if request.method=="POST":
         data = request.get_json()
         print("data ---- > ", data)
-        # prediction = np.array2string(model.predict(data))
-        results = classifier(data)
-        print(results)
-        return jsonify(results)
+        
+        results = model.predict(data)
+        
+        print("prediction ---- >",results)
+        resultStringify = {label: f'{percentage:.4f}' for label, percentage in results.items()}
+        return jsonify(resultStringify)
+    
     return "Not a proper request method or data"
 
 
 if __name__ == '__main__':
-
-    model_path = './models/transformers/' 
-    model = TFAutoModelForSequenceClassification.from_pretrained(model_path, local_files_only=True)
-    print("----------- transformer model loaded ------------")
-    tokenizer = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
-    print("----------- transformer tokenizer loaded ------------")
-    classifier = pipeline('sentiment-analysis', model=model, tokenizer=tokenizer,return_all_scores=True)
-    print(classifier)
+    model = Detoxify('original')
 
     app.run(debug=True, host='0.0.0.0')
 
