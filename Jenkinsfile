@@ -10,9 +10,7 @@ pipeline {
                 }
             }
             steps {
-                sh """
                 echo "running unit test"
-                """
                 /*sh """
                 git fetch origin
                 git checkout develop
@@ -25,9 +23,7 @@ pipeline {
                 branch 'develop'
             }
             steps {
-                sh """
                 echo "stress testing"
-                """
                 /*sh """
                 git fetch origin
                 git checkout release
@@ -40,9 +36,7 @@ pipeline {
                 branch 'release'
             }
             steps {
-                sh """
                 echo "integration testing"
-                """
                 /*sh """
                 git fetch origin
                 git checkout main
@@ -55,13 +49,9 @@ pipeline {
                 branch 'main'
             }
             steps {
-                sh """
                 echo "Building Artifact"
-                """
 
-                sh """
                 echo "Deploying Code"
-                """
             }
         }
     }
