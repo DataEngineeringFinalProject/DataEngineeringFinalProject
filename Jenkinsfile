@@ -1,19 +1,31 @@
+def branch_name = "${BRANCH_NAME}"
 pipeline {
-    agent { docker { image 'python:3.10.1-alpine' } }
-    stages {
-        stage('build') {
-            steps {
-                sh 'python --version'
-            }
+    agent {
+        node {
+            label 'master'
         }
     }
-}
-pipeline {
-    agent { docker { image 'golang:1.17.5-alpine' } }
     stages {
-        stage('build') {
+        stage('unit test') {
+            when {
+                expression {
+                    return branch_name =~ /^features_.*/
+                }
+            }
             steps {
-                sh 'go version'
+                sh """
+                echo "running unit test"
+                """
+            }
+        }
+        stage('stress test') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                sh """
+                echo "stress testing"
+                """
             }
         }
     }
