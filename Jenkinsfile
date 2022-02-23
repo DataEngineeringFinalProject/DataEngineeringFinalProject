@@ -14,8 +14,8 @@ pipeline {
             }
             steps {
                 echo "running unit test"
-                pip install pytest 
-                pip3 install detoxify
+                sh 'pip3 install pytest'
+                sh 'pip3 install detoxify'
 
                 pytest test_unit_app.py
                 /*sh """
