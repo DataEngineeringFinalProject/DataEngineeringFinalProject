@@ -1,10 +1,7 @@
 def branch_name = "${BRANCH_NAME}"
 pipeline {
-    agent {
-        node {
-            label 'master'
-        }
-    }
+    agent none
+
     stages {
         stage('unit test') {
             when {
