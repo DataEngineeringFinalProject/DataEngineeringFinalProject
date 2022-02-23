@@ -9,8 +9,15 @@ pipeline {
                     return branch_name =~ /^features_.*/
                 }
             }
+            agent {
+                docker 'python:3.10.1-alpine'
+            }
             steps {
                 echo "running unit test"
+                pip install pytest 
+                pip3 install detoxify
+
+                pytest test_unit_app.py
                 /*sh """
                 git fetch origin
                 git checkout develop
@@ -21,6 +28,9 @@ pipeline {
         stage('stress test and push to release') {
             when {
                 branch 'develop'
+            }
+            agent {
+                docker 'node:10.8.0'
             }
             steps {
                 echo "stress testing"
