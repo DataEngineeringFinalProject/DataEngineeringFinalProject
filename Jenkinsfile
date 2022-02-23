@@ -15,7 +15,7 @@ pipeline {
             steps {
                 echo "running unit test"
                 sh 'pip install pytest'
-                sh 'pip install pytorch'
+                sh 'pip install torch==1.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html'
                 sh 'pip install detoxify'
 
                 pytest test_unit_app.py
