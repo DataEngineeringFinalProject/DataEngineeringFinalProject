@@ -1,0 +1,16 @@
+
+<div class="container">
+  <h1>
+    {{title}}
+  </h1>
+
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+    <div class="form-group">
+      <label for="name">Enter a sentence : </label>
+      <input type="text" class="form-control" id="sentence" 
+        placeholder="Write your sentence here " formControlName="sentence" />
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit Form</button>
+  </form>
+</div>
