@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,19 @@ import {ReactiveFormsModule} from '@angular/forms';
 })
 export class AppComponent {
   title = 'Toxicity Monitor';
+
+  back = 'http://localhost:3000';
+
+
+
+  ngOnInit() {
+
+  }
+
   formGroup;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder, http: HttpClient
   ) {
     this.formGroup = this.formBuilder.group({
       sentence: ''
