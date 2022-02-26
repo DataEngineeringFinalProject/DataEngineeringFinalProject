@@ -13,6 +13,11 @@ const corsOptions = {
   }
 app.use(cors(corsOptions))
 
+/*app.get('/home',function(req,res){
+	res.send('Hello world this is Express');
+});*/
+
+
 app.use(
     session({
         secret: 'secret string',
@@ -21,10 +26,38 @@ app.use(
         cookie: { /* can add cookie related info here */ }
     })
 );
+app.post('/', function(req,res) {
+    console.log(req.body);
+    var sentences = req.body
+    
+
+});
+const options = {
+    url: 'http://localhost:5000/',
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Accept-Charset': 'utf-8',
+        'User-Agent': 'my-reddit-client'
+    
+    },
+    body: data ,
+    json: true
+};
+var returndata;
+
+var sendrequest = await request(options) 
+    .then(function (parsedBody) { 
+        console.log(parsedBody); // parsedBody contains the data sent back from the Flask server 
+        returndata = parsedBody; // do something with this data, here I'm assigning it to a variable. 
+    }) 
+    .catch(function (err) { 
+        console.log(err); 
+    }); 
 
 
 app.get('/', function(req, res) {
-    request("http://localhost:5000", function (error, response, body) {
+    request(options , function (error, response, body) {
         console.error('error:', error); 
         console.log('statusCode:', response && response.statusCode); 
         console.log('body:', body); 
