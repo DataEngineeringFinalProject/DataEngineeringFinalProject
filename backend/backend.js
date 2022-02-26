@@ -2,6 +2,7 @@ const cors = require('cors')
 const express = require('express')
 const request = require('request');
 const session = require('express-session');
+const fetch = require('node-fetch');
 
 var app = express();
 const PORT = 3000;
@@ -26,13 +27,41 @@ app.use(
         cookie: { /* can add cookie related info here */ }
     })
 );
-app.post('/', function(req,res) {
+
+
+app.post('/', async function(req,res) {
     console.log(req.body);
-    var sentences = req.body
-    
+    let sentences = req.body;
+
+    const response = await fetch('http://172.21.240.1:5000', {
+        method: 'post',
+        body: JSON.stringify(sentences),
+        headers: {'Content-Type': 'application/json'}
+    });
+
+    const data = await response.json();
+
+    /*const options = {
+        url: 'http://localhost:5000/',
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Accept-Charset': 'utf-8',
+            'User-Agent': 'my-reddit-client'
+        
+        },
+        body: sentences,
+        json: true
+    };*/
+
+    //var returndata;
+    //var sendrequest = await request(options);
+    console.log(data);
+    res.send(data);     
 
 });
-const options = {
+
+/*const options = {
     url: 'http://localhost:5000/',
     method: 'POST',
     headers: {
@@ -41,7 +70,7 @@ const options = {
         'User-Agent': 'my-reddit-client'
     
     },
-    body: data ,
+    body: sentences,
     json: true
 };
 var returndata;
@@ -63,7 +92,7 @@ app.get('/', function(req, res) {
         console.log('body:', body); 
         res.send(body); 
       });      
-});
+});*/
 
 app.listen(PORT, function (){ 
     console.log('Listening on Port', PORT);
