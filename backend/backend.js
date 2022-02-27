@@ -2,6 +2,8 @@ const cors = require('cors')
 const express = require('express')
 const request = require('request');
 const session = require('express-session');
+const fetch = require('node-fetch');
+const bp = require('body-parser')
 
 var app = express();
 const PORT = 3000;
@@ -12,6 +14,8 @@ const corsOptions = {
     method : 'POST,GET,PUT,OPTIONS,DELETE'
   }
 app.use(cors(corsOptions))
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
 
 /*app.get('/home',function(req,res){
 	res.send('Hello world this is Express');
@@ -26,13 +30,32 @@ app.use(
         cookie: { /* can add cookie related info here */ }
     })
 );
-app.post('/', function(req,res) {
-    console.log(req.body);
-    var sentences = req.body
-    
 
+
+app.post('/', async function(req,res) {
+
+    try {
+        console.log(req.body);
+        console.log(req.body.sent);
+
+        let sentence = req.body.sent;
+        console.log(sentence);
+        const response = await fetch('http://api_container:5000', {
+            method: 'post',
+            body: JSON.stringify(sentence),
+            headers: {'Content-Type': 'application/json'}
+        });
+        const data = await response.json();
+        console.log(data);
+        res.send(data);  
+    }
+    catch(error){
+        console.log(error);
+    }   
+    res.end();
 });
-const options = {
+
+/*const options = {
     url: 'http://localhost:5000/',
     method: 'POST',
     headers: {
@@ -41,7 +64,7 @@ const options = {
         'User-Agent': 'my-reddit-client'
     
     },
-    body: data ,
+    body: sentences,
     json: true
 };
 var returndata;
@@ -63,7 +86,7 @@ app.get('/', function(req, res) {
         console.log('body:', body); 
         res.send(body); 
       });      
-});
+});*/
 
 app.listen(PORT, function (){ 
     console.log('Listening on Port', PORT);

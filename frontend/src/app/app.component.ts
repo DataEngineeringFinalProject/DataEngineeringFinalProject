@@ -31,11 +31,12 @@ export class AppComponent {
 
   onSubmit(formData) {
     let sentence = formData['sentence'];
+    console.log(sentence)
     let j_data = JSON.stringify(sentence); 
     let headers = new HttpHeaders({'Access-Control-Allow-Origin':'*'});
-    headers.set('Content-Type','application/json; charset=utf-8');
+    headers.set('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
 
-    this.http.post<any>('http://localhost:3000', j_data, {headers:headers}).subscribe({
+    this.http.post<any>('http://localhost:3000', {sent : sentence}, {headers:headers}).subscribe({
         next: data => {
           console.log(data);
           //this.response = data.text();
