@@ -17,8 +17,8 @@ pipeline {
                 sh 'pip install pytest'
                 sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
                 sh 'pip3 install detoxify'
-
-                sh 'pytest test_unit_app.py'
+                sh 'dir'
+                sh 'api/pytest test_unit_app.py'
                 /*sh """
                 git fetch origin
                 git checkout develop
