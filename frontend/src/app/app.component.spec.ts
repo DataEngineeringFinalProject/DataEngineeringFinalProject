@@ -8,6 +8,8 @@ import { HttpClientTestingModule,HttpTestingController } from '@angular/common/h
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  let httpClient: HttpClient;
+  let httpTestingController: HttpTestingController;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -49,7 +51,6 @@ describe('AppComponent', () => {
     expect(component.formGroup.valid).toBeFalsy();
     component.formGroup.controls['sentences'].setValue("I hate you");
     expect(component.formGroup.valid).toBeTruthy();
-
 
   });
 
