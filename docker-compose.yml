@@ -1,0 +1,18 @@
+services:
+    front:
+        container_name: front_container
+        build: ./frontend
+        ports:
+            - "80:80"
+    back:
+        container_name: back_container
+        environment: 
+            - FRONTEND_URL=http://localhost
+        build: ./backend
+        ports:
+            - "3000:3000"
+    api:
+        container_name: api_container
+        build: ./api
+        ports:
+            - "5000:5000"
