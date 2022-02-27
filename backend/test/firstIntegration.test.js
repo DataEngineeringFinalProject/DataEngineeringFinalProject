@@ -1,7 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
-const app = require('../backend');
+const app = 'http://localhost:3000';
 const should = chai.should();
 const expect = chai.expect;
 const sinon = require("sinon");
@@ -13,17 +13,18 @@ describe('POST sentences', () => {
       chai
         .request(app)
         .post('/')
-        .send(sentence)
+        .send({sent :JSON.stringify(sentence)})
         .end((err, res) => {
           res.should.have.status(200);
-          //res.body.should.be.a('JSON');
-          //res.body.should.have.property('identity_attack');
-          //res.body.should.have.property('insult');
-          //res.body.should.have.property('obscene');
-          //res.body.should.have.property('severe_toxicity');
-          //res.body.should.have.property('threat');
-          //res.body.should.have.property('toxicity');
+          res.body.should.be.a('JSON');
+          res.body.should.have.property('identity_attack');
+          res.body.should.have.property('insult');
+          res.body.should.have.property('obscene');
+          res.body.should.have.property('severe_toxicity');
+          res.body.should.have.property('threat');
+          res.body.should.have.property('toxicity');
           expect(status.calledOnce).to.be.false;
+          //console.log(res.body)
           done();
         });
     });
