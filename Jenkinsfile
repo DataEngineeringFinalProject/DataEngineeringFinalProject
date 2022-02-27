@@ -30,11 +30,10 @@ pipeline {
             when {
                 branch 'develop'
             }
-            agent {
-                docker 'node:10.8.0'
-            }
+            agent { docker { image 'node:16.13.1-alpine' } }
             steps {
                 echo "stress testing"
+
                 /*sh """
                 git fetch origin
                 git checkout release
@@ -42,7 +41,20 @@ pipeline {
                 """*/
             }
         }
-        stage('integration test and push to main') {
+        stage('python integration test') {
+            when {
+                branch 'release'
+            }
+            steps {
+                echo "integration testing"
+                sh 'pip install pytest'
+                sh 'pip install torch==1.7.0'
+                sh 'pip install detoxify'
+
+                pytest test_integraton_app.py
+            }
+        }
+        stage('node integration test and push to main'){
             when {
                 branch 'release'
             }
