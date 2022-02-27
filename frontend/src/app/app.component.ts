@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Data } from './data.component';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent {
   back = 'http://localhost:3000';
 
   response = ''
+  data: Data;
 
   ngOnInit() {
 
@@ -36,8 +38,9 @@ export class AppComponent {
     let headers = new HttpHeaders({'Access-Control-Allow-Origin':'*'});
     headers.set('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
 
-    this.http.post<any>('http://localhost:3000', {sent : sentence}, {headers:headers}).subscribe({
+    this.http.post<Data>('http://localhost:3000', {sent : sentence}, {headers:headers}).subscribe({
         next: data => {
+          this.data = data;
           console.log(data);
           //this.response = data.text();
         },
