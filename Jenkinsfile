@@ -10,7 +10,7 @@ pipeline {
                 }
             }
             agent {
-                docker 'python:3.10-alpine'
+                docker 'python:3.8'
             }
             steps {
                 echo "running unit test"
