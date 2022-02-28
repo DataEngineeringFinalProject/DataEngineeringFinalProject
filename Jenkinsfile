@@ -14,13 +14,13 @@ pipeline {
             }
             steps {
                 echo "running unit test"
-                sh 'pip install pytest'
+                /*sh 'pip install pytest'
                 sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
                 sh 'pip3 install detoxify'
                 sh 'dir'
                 sh 'pytest api/test_unit_app.py'
 
-                sh 'git fetch origin'
+                sh 'git fetch origin'*/
                 /*sh """
                 git fetch origin
                 git checkout develop
@@ -43,7 +43,7 @@ pipeline {
                 sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
                 sh 'pip3 install detoxify'
                 sh 'dir'
-                sh 'docker compose-up --build'
+                sh 'docker compose up --build'
                 sh 'pytest api/test_integration_app.py'
                 /*sh """
                 git fetch origin
