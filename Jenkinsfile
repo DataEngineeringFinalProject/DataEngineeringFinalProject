@@ -39,7 +39,7 @@ pipeline {
             }
             steps {
                 echo "integration testing api"
-                sh 'dir /usr/local/bin/'
+                sh 'dir /usr/bin/'
                 sh 'docker-compose up'
                 sh 'pip install pytest'
                 sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
