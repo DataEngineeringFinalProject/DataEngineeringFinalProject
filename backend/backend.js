@@ -87,6 +87,13 @@ app.get('/', function(req, res) {
       });      
 });*/
 
-app.listen(PORT, function (){ 
+if(!module.parent) {
+    app.listen(PORT, function (){ 
+        console.log('Listening on Port', PORT);
+    });
+ }
+
+/*app.listen(PORT, function (){ 
     console.log('Listening on Port', PORT);
-});  
+}); */
+module.exports = app; 

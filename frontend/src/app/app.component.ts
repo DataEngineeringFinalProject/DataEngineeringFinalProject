@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
@@ -14,23 +14,24 @@ export class AppComponent {
 
   response = ''
 
-  ngOnInit() {
-  }
+
 
   formGroup;
 
   constructor(
     private formBuilder: FormBuilder, private http: HttpClient
-  ) {
+  ) { }
+    ngOnInit() {
     this.formGroup = this.formBuilder.group({
-      sentence: ''
+      sentence:['',[ Validators.required ]]
     });
   }
+
 
   onSubmit(formData) {
     let sentence = formData['sentence'];
     console.log(sentence)
-    let j_data = JSON.stringify(sentence); 
+    let j_data = JSON.stringify(sentence);
     let headers = new HttpHeaders({'Access-Control-Allow-Origin':'*'});
     headers.set('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
 
@@ -43,5 +44,8 @@ export class AppComponent {
             console.error('There was an error!', error);
         }
     })
+  }
+  isFormValid():boolean{
+    return this.formGroup.valid;
   }
 }
