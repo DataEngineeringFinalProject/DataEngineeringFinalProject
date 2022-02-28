@@ -40,9 +40,12 @@ pipeline {
             steps {
                 
                 echo "integration testing api"
-                sh 'curl -L https://github.com/docker/compose/releases/download/2.2.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
-                sh 'chmod +x /usr/local/bin/docker-compose'
+                //sh 'curl -L https://github.com/docker/compose/releases/download/2.2.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
+                //sh 'chmod +x /usr/local/bin/docker-compose'
+
+                sh 'pip3 install docker-compose'
                 sh 'dir'
+                sh 'dir /usr/local/bin'
                 sh 'docker-compose up --build'
                 sh 'pip install pytest'
                 sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
