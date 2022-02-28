@@ -47,7 +47,7 @@ pipeline {
                 sh 'dir'
                 sh 'docker-compose down'
                 sh 'docker container ls'
-                sh 'docker-compose up --build'
+                sh 'docker-compose up --build -d'
                 sh 'pip install pytest'
                 sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
                 sh 'pip3 install detoxify'
