@@ -34,10 +34,11 @@ pipeline {
                     return branch_name =~ /^features_.*/
                 }
             }
+            agent {
+                docker 'python:3.8'
+            }
             steps {
-                agent {
-                    docker 'python:3.8'
-                }
+                
                 echo "integration testing api"
                 sh 'curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
                 sh 'chmod +x /usr/local/bin/docker-compose'
