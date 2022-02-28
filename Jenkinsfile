@@ -45,7 +45,7 @@ pipeline {
 
                 sh 'pip3 install docker-compose'
                 sh 'dir'
-                sh 'dir /usr/local/bin'
+                sh 'docker-compose down'
                 sh 'docker-compose up --build'
                 sh 'pip install pytest'
                 sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
