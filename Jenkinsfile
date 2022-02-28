@@ -40,7 +40,7 @@ pipeline {
             steps {
                 
                 echo "integration testing api"
-                sh 'curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
+                sh 'curl -L https://github.com/docker/compose/releases/download/2.2.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
                 sh 'chmod +x /usr/local/bin/docker-compose'
                 sh 'dir'
                 sh 'docker-compose up --build'
