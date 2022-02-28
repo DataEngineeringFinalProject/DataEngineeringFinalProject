@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from './../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AppComponent {
   title = 'Toxicity Monitor';
 
-  back = 'http://localhost:3000';
-
   response = ''
 
   ngOnInit() {
-
   }
 
   formGroup;
@@ -36,7 +34,7 @@ export class AppComponent {
     let headers = new HttpHeaders({'Access-Control-Allow-Origin':'*'});
     headers.set('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
 
-    this.http.post<any>('http://localhost:3000', {sent : sentence}, {headers:headers}).subscribe({
+    this.http.post<any>('http://localhost:3002', {sent : sentence}, {headers:headers}).subscribe({
         next: data => {
           console.log(data);
           //this.response = data.text();

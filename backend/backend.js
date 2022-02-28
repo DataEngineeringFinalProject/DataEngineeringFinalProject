@@ -31,7 +31,6 @@ app.use(
     })
 );
 
-
 app.post('/', async function(req,res) {
 
     try {
@@ -40,7 +39,7 @@ app.post('/', async function(req,res) {
 
         let sentence = req.body.sent;
         console.log(sentence);
-        const response = await fetch('http://api_container:5000', {
+        const response = await fetch(process.env.API_URL, {
             method: 'post',
             body: JSON.stringify(sentence),
             headers: {'Content-Type': 'application/json'}
