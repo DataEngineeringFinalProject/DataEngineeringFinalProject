@@ -62,6 +62,7 @@ pipeline {
 
                 /*sh """
                 git fetch origin
+                gir branch release
                 git checkout release
                 git merge develop
                 """*/
