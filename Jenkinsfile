@@ -1,6 +1,6 @@
 def branch_name = "${BRANCH_NAME}"
 pipeline {
-    agent none
+    agent any
 
     stages {
         stage('unit test and push to develop') {
@@ -34,13 +34,11 @@ pipeline {
                     return branch_name =~ /^features_.*/
                 }
             }
-            agent {
-                docker 'python:3.8'
-            }
             steps {
                 echo "integration testing api"
+                sh 'dir /usr/loca/bin/'
                 sh 'dir /usr/bin/'
-                sh 'docker-compose up'
+                sh 'docker-compose up --build'
                 sh 'pip install pytest'
                 sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
                 sh 'pip3 install detoxify'
