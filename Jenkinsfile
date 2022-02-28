@@ -90,8 +90,9 @@ pipeline {
                 sh 'pip install pytest'
                 sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
                 sh 'pip3 install detoxify'
-                sh 'docker compose-up --build'
+                sh 'docker compose-up --build -d'
                 sh 'pytest api/test_integration_app.py'
+                sh 'docker-compose down'
                 /*sh """
                 git fetch origin
                 git checkout develop
