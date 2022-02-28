@@ -36,6 +36,7 @@ pipeline {
             }
             steps {
                 echo "integration testing api"
+                sh 'curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
                 sh 'dir /usr/bin/'
                 sh 'docker-compose up --build'
                 sh 'pip install pytest'
