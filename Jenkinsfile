@@ -38,7 +38,7 @@ pipeline {
                 echo "integration testing api"
                 sh 'curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
                 sh 'dir /usr/local/bin/'
-                sh 'sudo chmod +x /usr/local/bin/docker-compose'
+                sh 'chmod +x /usr/local/bin/docker-compose'
                 sh 'docker-compose up --build'
                 sh 'pip install pytest'
                 sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
