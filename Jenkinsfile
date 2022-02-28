@@ -36,7 +36,6 @@ pipeline {
             }
             steps {
                 echo "integration testing api"
-                sh 'dir /usr/loca/bin/'
                 sh 'dir /usr/bin/'
                 sh 'docker-compose up --build'
                 sh 'pip install pytest'
