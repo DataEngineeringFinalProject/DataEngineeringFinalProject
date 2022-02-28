@@ -24,6 +24,7 @@
   "devDependencies": {
     "chai": "^4.3.6",
     "concurrently": "^7.0.0",
+    "loadtest": "^5.2.0",
     "nodemon": "^2.0.15"
   }
 }
