@@ -33,7 +33,9 @@ pipeline {
                     return branch_name =~ /^features_.*/
                 }
             }
-            agent { docker { image 'node:latest' } }
+            agent { 
+                docker 'node:latest' 
+            }
             steps {
                 echo "stress testing"
                 sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
