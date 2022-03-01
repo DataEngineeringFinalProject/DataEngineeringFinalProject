@@ -13,7 +13,7 @@ describe('POST sentences', () => {
       chai
         .request(app)
         .post('/')
-        .send({sent :{sent : sentence}})
+        .send({sent :sentence})
         .end((err, res) => {
           res.should.have.status(200);
           //res.body.should.be.a('string');
