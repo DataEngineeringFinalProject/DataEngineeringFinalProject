@@ -24,9 +24,7 @@ describe('POST 100 sentences', () => {
                     return console.error('Got an error: %s', error);
                 }
                 console.log('Tests run successfully');
-            });
-            done();
-        
+            });        
     });
 });
 
