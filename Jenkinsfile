@@ -30,7 +30,7 @@ pipeline {
             }
             /*when {
                 expression {
-                    return branch_name =~ /^features_.*/
+                    return branch_name =~ /^features_./
                 }
             }*/
             agent { 
