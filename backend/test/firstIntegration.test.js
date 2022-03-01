@@ -13,7 +13,7 @@ describe('POST sentences', () => {
       chai
         .request(app)
         .post('/')
-        .send({sent :JSON.stringify(sentence)})
+        .send({sent :{sent : sentence}})
         .end((err, res) => {
           res.should.have.status(200);
           //res.body.should.be.a('string');
@@ -24,7 +24,7 @@ describe('POST sentences', () => {
           res.body.should.have.property('threat');
           res.body.should.have.property('toxicity');
           let toxicity = res.body.toxicity 
-          expect(toxicity > 0,50)
+          expect(toxicity > 0.50)
           expect(status.calledOnce).to.be.false;
           //console.log(res.body)
           done();
