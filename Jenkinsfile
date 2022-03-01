@@ -60,10 +60,10 @@ pipeline {
 
         stage('integrationt tests'){
             when {
-                /*expression {
-                    //return branch_name =~ /^features_./
-                }*/
-                branch 'develop'
+                expression {
+                    return branch_name =~ /^features_.*/
+                }
+                //branch 'develop'
             }
             parallel{
                 stage('api integration test'){
