@@ -25,14 +25,14 @@ pipeline {
             }
         }*/
         stage('stress test and push to release') {
-            /*when {
-                branch 'develop'
-            }*/
             when {
+                branch 'develop'
+            }
+            /*when {
                 expression {
                     return branch_name =~ /^features_.*/
                 }
-            }
+            }*/
             agent { 
                 docker 'node:latest' 
             }
@@ -46,11 +46,7 @@ pipeline {
                 // build the applications and detach
                 sh 'docker-compose up --build -d'
 
-                //sh 'npm install -g loadtest --save-dev'
-                //sh 'npm init'
-                sh 'dir'
                 sh 'cd backend && npm install'
-                //sh 'npm i -g jest-cli'
                 sh 'cd backend && npm test test/stressTest.test.js'
                 /*sh """
                 git fetch origin
@@ -64,10 +60,10 @@ pipeline {
 
         stage('integrationt tests'){
             when {
-                expression {
-                    //return branch_name =~ /^features_.*/
-                    branch 'develop'
-                }
+                /*expression {
+                    //return branch_name =~ /^features_./
+                }*/
+                branch 'develop'
             }
             parallel{
                 stage('api integration test'){
@@ -107,17 +103,14 @@ pipeline {
                     steps {
                         echo "integration testing backend"
 
-                        // since we are on agent we need ton install docker compose
-                        sh 'pip3 install docker-compose'
-
                         // down if there are docker still running
                         sh 'docker-compose down'
                         // build the applications and detach
                         sh 'docker-compose up --build -d'
-
-                        sh 'npm install mocha --save'
-                        sh 'npm install chai'
-                        sh 'npm run test -- backend/test/firstIntegration.test.js'
+                        sh 'cd backend && npm install'
+                        sh 'cd backend && npm install mocha --save'
+                        sh 'cd backend && npm install chai'
+                        sh 'cd backend && npm test test/firstIntegration.test.js'
                         /*sh """
                         git fetch origin
                         git checkout main
