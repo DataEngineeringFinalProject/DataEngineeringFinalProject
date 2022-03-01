@@ -34,7 +34,7 @@ pipeline {
                 }
             }
             agent { 
-                docker 'node:latest' 
+                docker 'node:16.13.1-alpine' 
             }
             steps {
                 echo "stress testing"
