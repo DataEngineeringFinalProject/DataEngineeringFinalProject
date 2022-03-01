@@ -37,7 +37,12 @@ pipeline {
             steps {
                 echo "stress testing"
                 sh 'curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
-                sh 'npm install'
+                // down if there are docker still running
+                sh 'docker-compose down'
+                // build the applications and detach
+                sh 'docker-compose up --build -d'
+
+                //sh 'npm install -g loadtest --save-dev'
                 sh 'npm run test --backend/test/stressTest.test.js'
                 /*sh """
                 git fetch origin
