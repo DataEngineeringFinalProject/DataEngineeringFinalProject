@@ -34,7 +34,7 @@ pipeline {
                 }
             }
             agent { 
-                docker 'node:16.13.1-alpine' 
+                docker 'node:latest' 
             }
             steps {
                 echo "stress testing"
@@ -47,7 +47,8 @@ pipeline {
                 sh 'docker-compose up --build -d'
 
                 //sh 'npm install -g loadtest --save-dev'
-                sh 'npm ci'
+                sh 'npm init'
+                sh 'npm install'
                 sh 'npm run test --backend/test/stressTest.test.js'
                 /*sh """
                 git fetch origin
