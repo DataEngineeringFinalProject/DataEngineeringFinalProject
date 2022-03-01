@@ -16,7 +16,7 @@ function statusCallback(error, result, latency) {
 }
 describe('POST 100 sentences', () => {
     it('stress test : should post 100 sentences with 10 client', done => {
-        jest.setTimeout(60000);
+        
             loadtest.loadTest(options, function(error, result)
             {
                 if (error)
@@ -24,7 +24,9 @@ describe('POST 100 sentences', () => {
                     return console.error('Got an error: %s', error);
                 }
                 console.log('Tests run successfully');
-            });        
+            });
+            done();
+        
     });
 });
 

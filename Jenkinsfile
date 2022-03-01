@@ -50,8 +50,8 @@ pipeline {
                 //sh 'npm init'
                 sh 'dir'
                 sh 'cd backend && npm install'
-                sh 'npm i -g jest-cli'
-                sh 'cd backend && jest test/stressTest.test.js'
+                //sh 'npm i -g jest-cli'
+                sh 'cd backend && npm test test/stressTest.test.js'
                 /*sh """
                 git fetch origin
                 git checkout release
