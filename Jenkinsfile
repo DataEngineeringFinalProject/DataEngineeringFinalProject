@@ -25,13 +25,20 @@ pipeline {
             }
         }
         stage('stress test and push to release') {
-            when {
+            /*when {
                 branch 'develop'
+            }*/
+            when {
+                expression {
+                    return branch_name =~ /^features_.*/
+                }
             }
             agent { docker { image 'node:latest' } }
             steps {
                 echo "stress testing"
+                sh 'curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
                 sh 'npm install -g loadtest --save-dev'
+                sh 'npm run test -- backend/test/stressTest.test.js'
                 /*sh """
                 git fetch origin
                 git checkout release
@@ -45,7 +52,8 @@ pipeline {
         stage('integrationt tests'){
             when {
                 expression {
-                    return branch_name =~ /^features_.*/
+                    //return branch_name =~ /^features_.*/
+                    branch 'develop'
                 }
             }
             parallel{
@@ -79,7 +87,7 @@ pipeline {
                     }
                 }
                 
-                stage('backend integration test and push to main'){
+                stage('backend integration test'){
                     agent {
                         docker 'node:latest'
                     }
@@ -96,7 +104,7 @@ pipeline {
 
                         sh 'npm install mocha --save'
                         sh 'npm install chai'
-                        sh 'npm run test'
+                        sh 'npm run test -- backend/test/firstIntegration.test.js'
                         /*sh """
                         git fetch origin
                         git checkout main
@@ -104,7 +112,7 @@ pipeline {
                         """*/
                     }
                 }
-                stage('node integration test and push to main'){
+                stage('front integration test'){
                     when {
                         branch 'release'
                     }
