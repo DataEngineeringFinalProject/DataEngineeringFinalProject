@@ -36,7 +36,7 @@ pipeline {
             agent { docker { image 'node:latest' } }
             steps {
                 echo "stress testing"
-                sh 'curl -L "https://github.com/docker/compose/releases/download/2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+                sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
                 sh 'chmod +x /usr/local/bin/docker-compose'
                 
                 // down if there are docker still running
