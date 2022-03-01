@@ -49,8 +49,8 @@ pipeline {
                 //sh 'npm install -g loadtest --save-dev'
                 //sh 'npm init'
                 sh 'dir'
-                sh 'npm install'
-                sh 'npm run test --backend/test/stressTest.test.js'
+                sh 'cd backend && npm install'
+                sh 'cd backend && npm run test --test/stressTest.test.js'
                 /*sh """
                 git fetch origin
                 git checkout release
