@@ -50,7 +50,7 @@ pipeline {
                 //sh 'npm init'
                 sh 'dir'
                 sh 'cd backend && npm install'
-                sh 'cd backend && npm run test --test/stressTest.test.js'
+                sh 'cd backend && npm run test -- -t test/stressTest.test.js'
                 /*sh """
                 git fetch origin
                 git checkout release
