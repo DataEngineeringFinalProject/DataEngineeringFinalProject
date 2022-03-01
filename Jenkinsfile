@@ -47,7 +47,7 @@ pipeline {
                 sh 'docker-compose up --build -d'
 
                 //sh 'npm install -g loadtest --save-dev'
-                sh 'npm install'
+                sh 'npm ci'
                 sh 'npm run test --backend/test/stressTest.test.js'
                 /*sh """
                 git fetch origin
