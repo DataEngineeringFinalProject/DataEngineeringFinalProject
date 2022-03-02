@@ -24,13 +24,13 @@ pipeline {
                 sh 'git fetch origin'
             }
         }*/
-        stage('stress test and push to release') {
+        /*stage('stress test and push to release') {
             /*when {
                 branch 'develop'
-            }*/
+            }
             when {
                 expression {
-                    return branch_name =~ /^features_.*/
+                    return branch_name =~ /^features_./
                 }
             }
             agent { 
@@ -47,20 +47,20 @@ pipeline {
                 // build the applications and detach
                 sh 'docker-compose up --build -d'
 
-                sh 'cd backend && npm install'
-                sh 'cd backend && npm test test/stressTest.test.js'
-                /*sh 'pip install pytest'
+                //sh 'cd backend && npm install'
+                //sh 'cd backend && npm test test/stressTest.test.js'
+                sh 'pip install pytest'
                 sh 'pip install requests'
-                sh 'pytest api/test_stressTest_app.py'*/
+                sh 'pytest api/test_stressTest_app.py'
                 /*sh """
                 git fetch origin
                 git checkout release
                 gir add *
                 gir commit -m "add to release"
                 git merge develop
-                """*/
+                """/
             }
-        }
+        }*/
 
         stage('integrationt tests'){
             when {
