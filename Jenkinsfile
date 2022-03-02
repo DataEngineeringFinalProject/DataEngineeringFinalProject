@@ -66,7 +66,7 @@ pipeline {
                 //branch 'develop'
             }
             parallel{
-                stage('api integration test'){
+                /*stage('api integration test'){
             
                     agent {
                         docker 'python:3.8'
@@ -94,7 +94,7 @@ pipeline {
                         // run integration test                
                         sh 'pytest api/test_integration_app.py'
                     }
-                }
+                }*/
                 
                 stage('backend integration test'){
                     agent {
