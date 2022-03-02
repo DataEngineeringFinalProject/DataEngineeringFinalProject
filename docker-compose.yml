@@ -25,12 +25,9 @@ services:
         pid: host
         restart: always
     prometheus:
-        image: prom/prometheus
         container_name: prometheus
+        build: ./prometheus
         ports:
-                - 9090:9090
-        volumes:
-                - "/monitoring/prometheus.yml:/monitoring/prometheus.yml"
-        restart: always
+            - "9090:9090"
 
 
