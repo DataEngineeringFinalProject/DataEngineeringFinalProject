@@ -47,11 +47,11 @@ pipeline {
                 // build the applications and detach
                 sh 'docker-compose up --build -d'
 
-                //sh 'cd backend && npm install'
-                //sh 'cd backend && npm test test/stressTest.test.js'
-                sh 'pip install pytest'
+                sh 'cd backend && npm install'
+                sh 'cd backend && npm test test/stressTest.test.js'
+                /*sh 'pip install pytest'
                 sh 'pip install requests'
-                sh 'pytest api/test_stressTest_app.py'
+                sh 'pytest api/test_stressTest_app.py'*/
                 /*sh """
                 git fetch origin
                 git checkout release
@@ -100,7 +100,7 @@ pipeline {
                     }
                 }*/
                 
-                stage('backend integration test'){
+                /*stage('backend integration test'){
                     agent {
                         docker 'node:latest'
                     }
@@ -123,9 +123,9 @@ pipeline {
                         git fetch origin
                         git checkout main
                         git merge release
-                        """*/
+                        """
                     }
-                }
+                }*/
                 stage('front integration test'){
                     agent {
                         docker 'node:latest'
@@ -144,6 +144,8 @@ pipeline {
                         sh 'docker-compose up --build -d'
 
                         sh 'npm install cypress'
+                        sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
+                        sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
                         /*sh """
                         git fetch origin
                         git checkout main
