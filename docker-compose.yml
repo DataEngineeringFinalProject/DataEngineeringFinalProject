@@ -1,3 +1,4 @@
+version: "2.0"
 services:
     front:
         container_name: front_container
@@ -16,3 +17,20 @@ services:
         build: ./api
         ports:
             - "5000:5000"
+    node_exporter:
+        image: prom/node-exporter
+        container_name: node-exporter
+        ports:
+            - 9100:9100
+        pid: host
+        restart: always
+    prometheus:
+        image: prom/prometheus
+        container_name: prometheus
+        ports:
+                - 9090:9090
+        volumes:
+                - "/monitoring/prometheus.yml:/monitoring/prometheus.yml"
+        restart: always
+
+
