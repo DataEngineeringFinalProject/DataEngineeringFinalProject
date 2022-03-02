@@ -110,7 +110,7 @@ pipeline {
                         sh 'docker-compose down'
                         // build the applications and detach
                         sh 'docker-compose up --build -d'
-                        sh 'curl --header "Content-Type: application/json" --request POST --data "{\"sent\":\"sentence test\"}" http://localhost:3002'
+                        sh 'curl --header \"Content-Type: application/json\" --request POST --data \"{\"sent\":\"sentence test\"}\" http://localhost:3002'
                         sh 'cd backend && npm install'
                         sh 'cd backend && npm install mocha --save'
                         sh 'cd backend && npm install chai --save'
