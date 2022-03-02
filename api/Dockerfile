@@ -3,6 +3,7 @@
 FROM python:3.8
 
 WORKDIR /app
+ENV PROMETHEUS_MULTIPROC_DIR=/tmp
 
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
