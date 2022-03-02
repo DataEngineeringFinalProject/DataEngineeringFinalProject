@@ -1,33 +1,34 @@
 version: "2.0"
-services:
-    front:
-        container_name: front_container
-        build: ./frontend
-        ports:
-            - "80:80"
-    back:
-        container_name: back_container
-        environment: 
-            - FRONTEND_URL=http://localhost
-        build: ./backend
-        ports:
-            - "3000:3000"
-    api:
-        container_name: api_container
-        build: ./api
-        ports:
-            - "5000:5000"
-    node_exporter:
-        image: prom/node-exporter
-        container_name: node-exporter
-        ports:
-            - 9100:9100
-        pid: host
-        restart: always
-    prometheus:
-        container_name: prometheus
-        build: ./prometheus
-        ports:
-            - "9090:9090"
+services: 
+  api: 
+    build: ./api
+    container_name: api_container
+    ports: 
+      - "5000:5000"
+  back: 
+    build: ./backend
+    container_name: back_container
+    environment: 
+      - "FRONTEND_URL=http://localhost"
+    ports: 
+      - "3000:3000"
+  front: 
+    build: ./frontend
+    container_name: front_container
+    ports: 
+      - "80:80"
+  node_exporter: 
+    container_name: node-exporter
+    image: prom/node-exporter
+    pid: host
+    ports: 
+      - "9100:9100"
+    restart: always
+  prometheus: 
+    build: ./prometheus
+    container_name: prometheus
+    ports: 
+      - "9090:9090"
+    
 
 
