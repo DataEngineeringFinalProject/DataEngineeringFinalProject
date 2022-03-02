@@ -128,7 +128,7 @@ pipeline {
                 }*/
                 stage('front integration test'){
                     agent {
-                        docker 'node:latest'
+                        docker 'cypress/base:latest'
                     }
                     /*when {
                         branch 'release'
@@ -142,8 +142,8 @@ pipeline {
                         sh 'docker-compose down'
                         // build the applications and detach
                         sh 'docker-compose up --build -d'
-
-                        sh 'npm install cypress'
+                        sh 'cd frontend && npm install'
+                        sh 'cd frontend && npm install cypress'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
                         /*sh """
