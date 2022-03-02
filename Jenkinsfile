@@ -50,6 +50,7 @@ pipeline {
                 //sh 'cd backend && npm install'
                 //sh 'cd backend && npm test test/stressTest.test.js'
                 sh 'pip install pytest'
+                sh 'pip install requests'
                 sh 'pytest api/test_stressTest_app.py'
                 /*sh """
                 git fetch origin
