@@ -34,7 +34,8 @@ pipeline {
                 }
             }
             agent { 
-                docker 'node:latest' 
+                //docker 'node:latest' 
+                docker 'python:3.8'
             }
             steps {
                 echo "stress testing"
