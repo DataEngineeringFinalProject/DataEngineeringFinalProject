@@ -123,11 +123,21 @@ pipeline {
                     }
                 }
                 stage('front integration test'){
-                    when {
-                        branch 'release'
+                    agent {
+                        docker 'node:latest'
                     }
+                    /*when {
+                        branch 'release'
+                    }*/
                     steps {
-                        echo "integration testing backend"
+                        echo "e2e testing"
+                        sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+                        sh 'chmod +x /usr/local/bin/docker-compose'
+
+                        // down if there are docker still running
+                        sh 'docker-compose down'
+                        // build the applications and detach
+                        sh 'docker-compose up --build -d'
                         /*sh """
                         git fetch origin
                         git checkout main
