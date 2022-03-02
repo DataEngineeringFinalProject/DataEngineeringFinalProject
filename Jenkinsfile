@@ -25,14 +25,14 @@ pipeline {
             }
         }*/
         stage('stress test and push to release') {
-            when {
-                branch 'develop'
-            }
             /*when {
-                expression {
-                    return branch_name =~ /^features_./
-                }
+                branch 'develop'
             }*/
+            when {
+                expression {
+                    return branch_name =~ /^features_.*/
+                }
+            }
             agent { 
                 docker 'node:latest' 
             }

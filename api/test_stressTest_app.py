@@ -1,10 +1,14 @@
+import pytest
+import requests
+import sched, time
+import http
 import json
 
 def send_request(url, data):
     j_data = json.dumps(data)
     print(j_data)
     headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
-    r = client.post(url, data=j_data, headers=headers)
+    r = requests.post(url, data=j_data, headers=headers)
     return r
 
 def test_stressTest():
