@@ -15,7 +15,7 @@ def test_stressTest():
     total_elapsed_time = 0
     url = "http://localhost:5000"
     data = "I love you"
-    for i in range(0, 10):
+    for i in range(0, 1):
         response = send_request(url, data)
         total_elapsed_time += response.elapsed.total_seconds()    
     assert(total_elapsed_time < 60)
