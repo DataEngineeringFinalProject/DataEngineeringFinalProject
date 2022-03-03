@@ -1,25 +1,35 @@
-<header id="header"></header>
-<div class="container">
-  <h1 class="title">
-    {{title}}
-  </h1>
+<body>
+  <header id="header">
+    <div id="names" >Maud GELLEE - Louise BOUQUE - Cassandra LOUPEC</div>
+  </header>
+  <div class="container">
+    <h1 class="title">
+      {{title}}
+    </h1>
 
 
-  <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
-    <div class="form-group">
-      <label for="name">Enter a sentence : </label>
-      <input type="text" class="form-control" id="sentence" 
-        placeholder="Write your sentence here " formControlName="sentence" />
-    </div>
-     
-    <button class="btn btn-primary" type="submit">Submit Form</button>
-  </form>
-  <div id=identity> Identity Attack :  {{data.identity_attack}}</div>
-  <div id=insult> Insult :  {{data.insult}}</div>
-  <div id=obscene> Obscene :  {{data.obscene}}</div>
-  <div id=S_Toxicity> Severe Toxicity :  {{data.severe_toxicity}}</div>
-  <div id=Threat> Threat :  {{data.threat}}</div>
-  <div id=Toxicity> Toxicity :  {{data.toxicity}}</div>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+      <div class="form-group">
+        <label classe="sentence" for="name">Enter a sentence : </label>
+        <input type="text" class="form-control" id="sentence" 
+          placeholder="Write your sentence here " formControlName="sentence" />
+      </div>
+      
+      <button class="btn btn-primary" type="submit">Submit Form</button>
+    </form>
+    <!--<div id=identity> Identity Attack :  {{data.identity_attack}}</div>-->
+    <div class="result"id=identity> Identity Attack :  0.0773 </div>
+    <!--<div id=insult> Insult :  {{data.insult}}</div>-->
+    <div class="result"id=insult> Insult : 0.9032</div>
+    <!--<div id=obscene> Obscene :  {{data.obscene}}</div>-->
+    <div class="result"id=obscene> Obscene : 0.9862</div>
+    <!--<div id=S_Toxicity> Severe Toxicity :  {{data.severe_toxicity}}</div>-->
+    <div class="result"id=S_Toxicity> Severe Toxicity : 0.7235</div>
+    <!--<div id=Threat> Threat :  {{data.threat}}</div>-->
+    <div class="result"id=Threat> Threat :  0.7034</div>
+    <!--<div id=Toxicity> Toxicity :  {{data.toxicity}}</div>-->
+    <div class="result"id=Toxicity> Toxicity : 0.9969</div>
 
-</div>
-<footer id="footer"></footer>
+  </div>
+  <footer id="footer"></footer>
+</body>
