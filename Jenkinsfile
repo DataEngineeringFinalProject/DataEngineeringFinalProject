@@ -144,7 +144,7 @@ pipeline {
                         sh 'docker-compose down'
                         // build the applications and detach
 
-                        sh 'docker-compose up --build '
+                        sh 'docker-compose up --build -d'
                         sh 'docker ps'
                         sh 'cd frontend && npm install'
                         sh 'cd frontend && npm install cypress'
