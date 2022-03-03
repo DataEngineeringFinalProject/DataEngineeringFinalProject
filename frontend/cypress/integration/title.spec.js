@@ -1,6 +1,6 @@
 describe('Toxicity', () => {
     beforeEach(() => {
-      cy.visit('http://localhost:80/');
+      cy.visit('http://192.168.1.35:9080/');
     });
   
     it('has the correct title', () => {
