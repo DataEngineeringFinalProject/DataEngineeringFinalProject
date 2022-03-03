@@ -1,6 +1,6 @@
 
 body {
-  background-color:lightcyan;
+  background-color:honeydew;
   height: 750px;
   width: auto;
   margin: -8px;
@@ -19,6 +19,7 @@ div#all {
   margin-left: 300px;
   margin-right: 300px;
   text-align: center;
+  font-weight: bold;
 }
 
 h1 {
@@ -50,7 +51,7 @@ div.form-group {
 }
 
 div#results {
-  background-color: steelblue;
+  background-color: cadetblue;
   margin-left: 100px;
   margin-right: 100px;
   height: 300px;
@@ -65,4 +66,7 @@ div#results {
   margin : auto;
   margin-top: 10px;
   margin-bottom: 10px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-color: aquamarine;
 }
