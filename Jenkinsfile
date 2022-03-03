@@ -100,7 +100,7 @@ pipeline {
                     }
                 }*/
                 
-                /*stage('backend integration test'){
+                stage('backend integration test'){
                     agent {
                         docker 'node:latest'
                     }
@@ -125,16 +125,16 @@ pipeline {
                         git fetch origin
                         git checkout main
                         git merge release
-                        """
+                        """*/
                     }
-                }*/
-                stage('front integration test'){
+                }
+                /*stage('front integration test'){
                     agent {
                         docker 'cypress/browsers:chrome69'
                     }
                    /* when {
                         branch 'release'
-                    }*/ 
+                    }
                     steps {
                         echo "e2e testing"
                         sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
@@ -168,7 +168,7 @@ pipeline {
                                     }
                                 }
                             }
-                        }*/
+                        }
                         //sh 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' http://localhost:3002'
 
                         //sh 'cd frontend && apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
@@ -179,9 +179,9 @@ pipeline {
                         git fetch origin
                         git checkout main
                         git merge release
-                        """*/
+                        """/
                     }
-                }
+                }*/
             }
         }
         
