@@ -130,7 +130,7 @@ pipeline {
                 }*/
                 stage('front integration test'){
                     agent {
-                        docker 'cypress/included:9.4.1'
+                        docker 'cypress/browsers:chrome69'
                     }
                    /* when {
                         branch 'release'
