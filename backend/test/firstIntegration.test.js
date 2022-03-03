@@ -1,7 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
-const app = 'http://0.0.0.0:3002';
+const app = 'http://back_container:3002';
 const should = chai.should();
 const expect = chai.expect;
 const sinon = require("sinon");
