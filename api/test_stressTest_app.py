@@ -13,7 +13,7 @@ def send_request(url, data):
 
 def test_stressTest():
     total_elapsed_time = 0
-    url = "http://localhost:5000"
+    url = "http://192.168.1.35:5000"
     data = "I love you"
     #for i in range(0, 1):
     response = send_request(url, data)

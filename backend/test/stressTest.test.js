@@ -1,7 +1,7 @@
 const loadtest = require('loadtest');
 const sentence = "I love you";
 const options = {
-	url: 'http://localhost:3000',
+	url: 'http://192.168.1.35:3002',
     concurrency : 10,
 	maxRequests: 100,
     method: 'POST',
