@@ -163,7 +163,7 @@ pipeline {
                                 }*/
                                 waitUntil {
                                     script {
-                                        def r = sh script: 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' --fail http://192.168.1.35:5000', returnStdout: true
+                                        def r = sh script: 'curl --header "Content-Type: application/json" --request POST --data "{"sent":"sentence test"}" --fail http://192.168.1.35:5000', returnStdout: true
                                         return (r == 0);
                                     }
                                 }
