@@ -152,7 +152,7 @@ pipeline {
                         sh 'cd frontend && apt-get install -y libgbm-dev'
 
                         script {
-                            timeout(50) {
+                            timeout(125) {
                                 waitUntil {
                                     try {
                                         sh script: 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' --fail http://192.168.1.35:5000', returnStdout: true
