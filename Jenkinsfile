@@ -150,24 +150,23 @@ pipeline {
                         sh 'cd frontend && npm install cypress'
                         sh 'cd frontend && npx browserslist@latest --update-db'
                         sh 'cd frontend && apt-get install -y libgbm-dev'
-                        sh "curl --header \"Content-Type: application/json\" --request POST --data \'{\'sent\':\'sentence test\'}\' http://192.168.1.35:5000"
 
                         script {
                             timeout(50) {
-                                waitUntil {
+                                /*waitUntil {
                                     try {
                                         sh "curl --header \"Content-Type: application/json\" --request POST --data \"{\"sent\":\"sentence test\"}\" http://192.168.1.35:5000"
                                         return true
                                     } catch (exception) {
                                         return false
                                     }
-                                }
-                                /*waitUntil {
+                                }*/
+                                waitUntil {
                                     script {
-                                        def r = sh script: 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' http://192.168.1.35:5000', returnStdout: true
+                                        def r = sh script: 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' --fail http://192.168.1.35:5000', returnStdout: true
                                         return (r == 0);
                                     }
-                                }*/
+                                }
                             }
                         }
                         //sh 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' http://localhost:3002'
