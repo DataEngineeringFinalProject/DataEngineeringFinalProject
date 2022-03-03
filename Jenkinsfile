@@ -119,6 +119,7 @@ pipeline {
                         sh 'cd backend && npm install'
                         sh 'cd backend && npm install mocha --save'
                         sh 'cd backend && npm install chai --save'
+                        sh 'docker ps'
                         sh 'cd backend && npm test test/firstIntegration.test.js'
                         /*sh """
                         git fetch origin
