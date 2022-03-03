@@ -147,7 +147,7 @@ pipeline {
                         sh 'docker ps'
                         sh 'cd frontend && npm install'
                         sh 'cd frontend && npm install cypress'
-                        sh 'npx cypress --version'
+                        sh 'apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
                         /*sh """
