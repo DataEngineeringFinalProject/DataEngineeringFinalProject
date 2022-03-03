@@ -134,7 +134,7 @@ pipeline {
                     }
                    /* when {
                         branch 'release'
-                    }*/
+                    }*/ 
                     steps {
                         echo "e2e testing"
                         sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
@@ -149,7 +149,7 @@ pipeline {
                         sh 'cd frontend && npm install'
                         sh 'cd frontend && npm install cypress'
                         sh 'cd frontend && npx browserslist@latest --update-db'
-                        sh 'cd frontend && apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
+                        //sh 'cd frontend && apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
                         /*sh """
