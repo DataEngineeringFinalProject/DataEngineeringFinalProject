@@ -27,7 +27,7 @@ describe('POST sentences', () => {
           expect(toxicity > 0,50)
           expect(status.calledOnce).to.be.false;
           //console.log(res.body)
-          done();
+        done();
         });
     });
   });
