@@ -123,7 +123,7 @@ pipeline {
                         git fetch origin
                         git checkout main
                         git merge release
-                        """
+                        """*/
                     }
                 }
                 /*stage('front integration test'){
