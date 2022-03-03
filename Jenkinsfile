@@ -147,8 +147,9 @@ pipeline {
                         sh 'docker ps'
                         sh 'cd frontend && npm install'
                         sh 'cd frontend && npm install cypress'
-                        sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
-                        sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
+                        sh 'cd frontend && npm run cy:run --spec "cypress/integration/title.spec.js"'
+                        sh 'cd frontend && npm run cy:run --spec "cypress/integration/submit.spec.js"'
+                        
                         /*sh """
                         git fetch origin
                         git checkout main
