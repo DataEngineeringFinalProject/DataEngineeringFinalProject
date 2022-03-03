@@ -155,7 +155,7 @@ pipeline {
                             timeout(125) {
                                 waitUntil {
                                     try {
-                                        sh script: 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' --fail http://192.168.1.35:5000', returnStdout: true
+                                        sh script: 'curl --header \'"Content-Type: application/json"\' --request POST --data \'{"sent":"sentence test"}\' --fail http://192.168.1.35:5000', returnStdout: true
                                         return true
                                     } catch (exception) {
                                         return false
