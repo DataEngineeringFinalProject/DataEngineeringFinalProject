@@ -1,8 +1,9 @@
-
+<header id="header"></header>
 <div class="container">
-  <h1>
+  <h1 class="title">
     {{title}}
   </h1>
+
 
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
     <div class="form-group">
@@ -20,7 +21,5 @@
   <div id=Threat> Threat :  {{data.threat}}</div>
   <div id=Toxicity> Toxicity :  {{data.toxicity}}</div>
 
-
-  
-
 </div>
+<footer id="footer"></footer>
