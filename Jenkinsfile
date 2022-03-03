@@ -150,8 +150,8 @@ pipeline {
                         sh 'cd frontend && npm install cypress'
                         sh 'cd frontend && npx browserslist@latest --update-db'
                         sh 'cd frontend && apt-get install -y libgbm-dev'
-
-                        script {
+                        sh 'ping http://192.168.1.35:5000'
+                        /*script {
                             timeout(125) {
                                 waitUntil {
                                     try {
@@ -166,9 +166,9 @@ pipeline {
                                         def r = sh script: 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' --fail http://192.168.1.35:5000', returnStdout: true
                                         return (r == 0);
                                     }
-                                }*/
+                                }
                             }
-                        }
+                        }*/
                         //sh 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' http://localhost:3002'
 
                         //sh 'cd frontend && apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
