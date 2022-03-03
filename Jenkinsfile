@@ -132,9 +132,9 @@ pipeline {
                     agent {
                         docker 'cypress/base:latest'
                     }
-                    /*when {
+                    when {
                         branch 'release'
-                    }*/
+                    }/
                     steps {
                         echo "e2e testing"
                         sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
@@ -147,9 +147,9 @@ pipeline {
                         sh 'docker ps'
                         sh 'cd frontend && npm install'
                         sh 'cd frontend && npm install cypress'
-                        sh 'cd frontend && npm run cypress run --spec "cypress/integration/title.spec.js"'
-                        sh 'cd frontend && npm run cypress run --spec "cypress/integration/submit.spec.js"'
-                        
+                        sh 'npx cypress --version'
+                        sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
+                        sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
                         /*sh """
                         git fetch origin
                         git checkout main
