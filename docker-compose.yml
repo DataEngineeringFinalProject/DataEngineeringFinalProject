@@ -1,5 +1,6 @@
 services:
     front:
+        network_mode: "host"
         container_name: front_container
         environment: 
             - BACKEND_URL=http://localhost:3002
@@ -7,6 +8,7 @@ services:
         ports:
             - "9080:80"
     back:
+        network_mode: "host"
         container_name: back_container
         environment: 
             - API_URL=http://api:5000
@@ -15,6 +17,7 @@ services:
         ports:
             - "3002:3000"
     api:
+        network_mode: "host"
         container_name: api_container
         build: ./api
         ports:
