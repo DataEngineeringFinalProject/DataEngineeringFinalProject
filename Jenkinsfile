@@ -141,9 +141,9 @@ pipeline {
                         sh 'chmod +x /usr/local/bin/docker-compose'
 
                         // down if there are docker still running
-                        sh 'docker-compose down'
+                        //sh 'docker-compose down'
                         // build the applications and detach
-                        
+
                         sh 'docker-compose up --build -d'
                         sh 'docker ps'
                         sh 'cd frontend && npm install'
