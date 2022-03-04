@@ -67,7 +67,7 @@ pipeline {
                 expression {
                     return branch_name =~ /^features_.*/
                 }
-                //branch 'develop'
+                //branch 'release'
             }
             parallel{
                 /*stage('api integration test'){
