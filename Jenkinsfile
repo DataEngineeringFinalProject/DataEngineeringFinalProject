@@ -195,25 +195,26 @@ pipeline {
                     }
                 }
             }
-        
         }
         stage('push to main'){
             when {
                 branch 'release_test'
             }
-            sh """
-            git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
-            git fetch --all
-            """             
-            sh "git config user.email \"maud.glacee@gmail.com\""
-            sh "git config user.name \"maudg94\""
+            steps {
+                sh """
+                git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+                git fetch --all
+                """             
+                sh "git config user.email \"maud.glacee@gmail.com\""
+                sh "git config user.name \"maudg94\""
 
-            //sh 'git fetch'
-            sh 'git branch -a'
-            sh 'git checkout main'
-            sh 'git merge release_test'
-            withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
-                sh 'git push -u origin main'
+                //sh 'git fetch'
+                sh 'git branch -a'
+                sh 'git checkout main'
+                sh 'git merge release_test'
+                withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
+                    sh 'git push -u origin main'
+                }
             }
         }
         
