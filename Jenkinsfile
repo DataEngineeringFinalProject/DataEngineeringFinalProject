@@ -120,6 +120,7 @@ pipeline {
                         sh 'cd backend && npm install mocha --save'
                         sh 'cd backend && npm install chai --save'
                         sh 'docker ps'
+                        sh 'curl http://192.168.1.35:5000 --header "Content-Type: application/json" --request GET'
                         sh 'cd backend && npm test test/firstIntegration.test.js'
                         /*sh """
                         git fetch origin
