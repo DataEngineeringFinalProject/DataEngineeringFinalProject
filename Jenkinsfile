@@ -25,7 +25,7 @@ pipeline {
         }*/
         stage('stress test and push to release') {
             when {
-                branch 'develop'
+                branch 'develop_test'
             }
             agent { 
                 docker 'node:latest' 
