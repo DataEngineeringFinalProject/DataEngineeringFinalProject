@@ -57,6 +57,7 @@ pipeline {
                 git merge develop
                 """*/                
                 sh 'git fetch origin'
+                sh 'git branch -a'
                 sh 'git checkout release_test'
                 sh 'git merge develop_test'
             }
