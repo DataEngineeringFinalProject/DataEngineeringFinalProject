@@ -73,142 +73,146 @@ pipeline {
 				}
             }
         }
+        stages('integrationt tests and push to main'){
+            stage('integrationt tests'){
+                when {
+                    /*expression {
+                        return branch_name =~ /^features_./
+                    }*/
+                    branch 'release_test'
+                    //branch 'fausseBranche'
+                }
+                parallel{
+                    stage('api integration test'){
+                
+                        agent {
+                            docker 'python:3.8'
+                        }
+                        steps {
+                            
+                            echo "integration testing api"
 
-        stage('integrationt tests and push to main'){
-            when {
-                /*expression {
-                    return branch_name =~ /^features_./
-                }*/
-                branch 'release_test'
-                //branch 'fausseBranche'
-            }
-            parallel{
-                stage('api integration test'){
-            
-                    agent {
-                        docker 'python:3.8'
+                            // since we are on agent we need ton install docker compose
+                            sh 'pip3 install docker-compose'
+
+                            // down if there are docker still running
+                            sh 'docker-compose down'
+                            // build the applications and detach
+                            sh 'docker-compose up --build -d'
+
+                            // install requirement for integration testing
+                            sh 'pip install pytest'
+                            sh 'pip install numpy'
+                            sh 'pip install pandas'
+                            sh 'pip install Flask==2.0.1'
+                            sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
+                            sh 'pip3 install detoxify'
+
+                            // run integration test                
+                            sh 'pytest api/test_integration_app.py'
+
+                            sh 'docker-compose down'
+                        }
                     }
-                    steps {
-                        
-                        echo "integration testing api"
+                    
+                    stage('backend integration test'){
+                        agent {
+                            docker 'node:latest'
+                        }
+                        steps {
+                            echo "integration testing backend"
 
-                        // since we are on agent we need ton install docker compose
-                        sh 'pip3 install docker-compose'
+                            sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+                            sh 'chmod +x /usr/local/bin/docker-compose'
 
-                        // down if there are docker still running
-                        sh 'docker-compose down'
-                        // build the applications and detach
-                        sh 'docker-compose up --build -d'
+                            // down if there are docker still running
+                            sh 'docker-compose down'
+                            // build the applications and detach
+                            sh 'docker-compose up --build -d'
+                            sh 'cd backend && npm install'
+                            sh 'cd backend && npm install mocha --save'
+                            sh 'cd backend && npm install chai --save'
+                            script {
+                                timeout(125) {
+                                    waitUntil {
+                                        try {
+                                            sh script: 'curl http://192.168.1.35:5000 --header "Content-Type: application/json" --request GET', returnStdout: true
+                                            return true
+                                        } catch (exception) {
+                                            return false
+                                        }
+                                    }
+                                }
+                            }
+                            sh 'cd backend && npm test test/firstIntegration.test.js'
+                            sh 'docker-compose down'
+                        }
+                    }
+                    stage('front integration test'){
+                        agent {
+                            docker 'cypress/base:latest'
+                        }
+                        /*when {
+                            branch 'release'
+                        }*/
+                        steps {
+                            echo "e2e testing"
+                            sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+                            sh 'chmod +x /usr/local/bin/docker-compose'
 
-                        // install requirement for integration testing
-                        sh 'pip install pytest'
-                        sh 'pip install numpy'
-                        sh 'pip install pandas'
-                        sh 'pip install Flask==2.0.1'
-                        sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
-                        sh 'pip3 install detoxify'
+                            // down if there are docker still running
+                            sh 'docker-compose down'
+                            // build the applications and detach
 
-                        // run integration test                
-                        sh 'pytest api/test_integration_app.py'
+                            sh 'docker-compose up --build -d'
+                            sh 'cd frontend && npm install'
+                            sh 'cd frontend && npm install cypress'
+                            sh 'cd frontend && npx browserslist@latest --update-db'
+                            sh 'cd frontend && apt-get install -y libgbm-dev'
+                            script {
+                                timeout(125) {
+                                    waitUntil {
+                                        try {
+                                            sh script: 'curl http://192.168.1.35:5000 --header "Content-Type: application/json" --request GET', returnStdout: true
+                                            return true
+                                        } catch (exception) {
+                                            return false
+                                        }
+                                    }
+                                }
+                            }
+                            //sh 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' http://localhost:3002'
 
-                        sh 'docker-compose down'
+                            //sh 'cd frontend && apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
+                            sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
+                            sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
+                            sh 'docker-compose down'
+                            /*sh """
+                            git fetch origin
+                            git checkout main
+                            git merge release
+                            """*/
+                        }
                     }
                 }
                 
-                stage('backend integration test'){
-                    agent {
-                        docker 'node:latest'
-                    }
-                    steps {
-                        echo "integration testing backend"
-
-                        sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
-                        sh 'chmod +x /usr/local/bin/docker-compose'
-
-                        // down if there are docker still running
-                        sh 'docker-compose down'
-                        // build the applications and detach
-                        sh 'docker-compose up --build -d'
-                        sh 'cd backend && npm install'
-                        sh 'cd backend && npm install mocha --save'
-                        sh 'cd backend && npm install chai --save'
-                        script {
-                            timeout(125) {
-                                waitUntil {
-                                    try {
-                                        sh script: 'curl http://192.168.1.35:5000 --header "Content-Type: application/json" --request GET', returnStdout: true
-                                        return true
-                                    } catch (exception) {
-                                        return false
-                                    }
-                                }
-                            }
-                        }
-                        sh 'cd backend && npm test test/firstIntegration.test.js'
-                        sh 'docker-compose down'
-                    }
-                }
-                stage('front integration test'){
-                    agent {
-                        docker 'cypress/base:latest'
-                    }
-                    /*when {
-                        branch 'release'
-                    }*/
-                    steps {
-                        echo "e2e testing"
-                        sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
-                        sh 'chmod +x /usr/local/bin/docker-compose'
-
-                        // down if there are docker still running
-                        sh 'docker-compose down'
-                        // build the applications and detach
-
-                        sh 'docker-compose up --build -d'
-                        sh 'cd frontend && npm install'
-                        sh 'cd frontend && npm install cypress'
-                        sh 'cd frontend && npx browserslist@latest --update-db'
-                        sh 'cd frontend && apt-get install -y libgbm-dev'
-                        script {
-                            timeout(125) {
-                                waitUntil {
-                                    try {
-                                        sh script: 'curl http://192.168.1.35:5000 --header "Content-Type: application/json" --request GET', returnStdout: true
-                                        return true
-                                    } catch (exception) {
-                                        return false
-                                    }
-                                }
-                            }
-                        }
-                        //sh 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' http://localhost:3002'
-
-                        //sh 'cd frontend && apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
-                        sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
-                        sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
-                        sh 'docker-compose down'
-                        /*sh """
-                        git fetch origin
-                        git checkout main
-                        git merge release
-                        """*/
-                    }
-                }
             }
-            sh """
-            git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
-            git fetch --all
-            """             
-            sh "git config user.email \"maud.glacee@gmail.com\""
-            sh "git config user.name \"maudg94\""
+            stage('push to main'){
+                sh """
+                git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+                git fetch --all
+                """             
+                sh "git config user.email \"maud.glacee@gmail.com\""
+                sh "git config user.name \"maudg94\""
 
-            //sh 'git fetch'
-            sh 'git branch -a'
-            sh 'git checkout main'
-            sh 'git merge release_test'
-            withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
-                sh 'git push -u origin main'
-            }
+                //sh 'git fetch'
+                sh 'git branch -a'
+                sh 'git checkout main'
+                sh 'git merge release_test'
+                withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
+                    sh 'git push -u origin main'
+                }
+            }            
         }
         
         stage('deploying') {
