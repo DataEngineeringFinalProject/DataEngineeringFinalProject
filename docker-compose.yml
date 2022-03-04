@@ -3,7 +3,7 @@ services:
         #network_mode: "host"
         container_name: front_container
         environment: 
-            - BACKEND_URL=http://localhost:3002
+            - BACKEND_URL=http://192.168.1.35:3002
         build: ./frontend
         ports:
             - "9080:80"
