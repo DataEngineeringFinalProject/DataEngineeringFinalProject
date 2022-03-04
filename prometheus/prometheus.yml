@@ -21,6 +21,11 @@ scrape_configs:
     static_configs:
       - targets: 
         - 'api_container:5000'
+  - job_name: cadvisor
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+        - cadvisor:8080
   - job_name: 'prometheus'
     static_configs:
       - targets:

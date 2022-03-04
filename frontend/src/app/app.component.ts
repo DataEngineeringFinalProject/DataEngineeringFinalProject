@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+//import {MetricsComponent} from '@loopback/metrics';
 
 @Component({
   selector: 'app-root',
@@ -16,18 +17,19 @@ export class AppComponent {
   response = ''
 
 
-
+  component;
   formGroup;
 
   constructor(
-    private formBuilder: FormBuilder, private http: HttpClient
+    private formBuilder: FormBuilder, private http: HttpClient,
   ) { }
     ngOnInit() {
     this.formGroup = this.formBuilder.group({
       sentence:['',[ Validators.required ]]
     });
-  }
+    //this.component(MetricsComponent);
 
+  }
 
   onSubmit(formData) {
     let sentence = formData['sentence'];
