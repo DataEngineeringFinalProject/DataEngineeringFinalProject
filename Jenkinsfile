@@ -32,7 +32,7 @@ pipeline {
                 //docker 'python:3.8'
             }
             steps {
-                git([url:'https://github.com/DataEngineeringFinalProject/DataEngineeringFinalProject/', branch:"develop_test"])
+                git([url:'git@github.com:maudg94/DataEngineeringFinalProject/DataEngineeringFinalProject.git', branch:"develop_test"])
                 echo "stress testing"
                 sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
                 sh 'chmod +x /usr/local/bin/docker-compose'
