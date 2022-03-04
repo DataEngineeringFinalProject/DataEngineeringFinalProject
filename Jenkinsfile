@@ -79,8 +79,8 @@ pipeline {
                 /*expression {
                     return branch_name =~ /^features_./
                 }*/
-                //branch 'release'
-                branch 'fausseBranche'
+                branch 'release_test'
+                //branch 'fausseBranche'
             }
             parallel{
                 stage('api integration test'){
@@ -195,11 +195,20 @@ pipeline {
                     }
                 }
             }
-            /*sh """
-            git fetch origin
-            git checkout main
-            git merge release
-            """*/
+            sh """
+            git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+            git fetch --all
+            """             
+            sh "git config user.email \"maud.glacee@gmail.com\""
+            sh "git config user.name \"maudg94\""
+
+            //sh 'git fetch'
+            sh 'git branch -a'
+            sh 'git checkout main'
+            sh 'git merge release_test'
+            withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
+                sh 'git push -u origin main'
+            }
         }
         
         stage('deploying') {
@@ -207,9 +216,7 @@ pipeline {
                 branch 'main'
             }
             steps {
-                echo "Building Artifact"
-
-                echo "Deploying Code"
+                echo "Deploying ..."
             }
         }
     }
