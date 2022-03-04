@@ -38,6 +38,7 @@ pipeline {
                 
                 // down if there are docker still running
                 sh 'docker-compose down'
+                sh 'docker ps'
                 // build the applications and detach
                 sh 'docker-compose up --build -d'
 
