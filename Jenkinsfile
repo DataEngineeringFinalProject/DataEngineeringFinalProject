@@ -44,6 +44,8 @@ pipeline {
 
                 sh 'cd backend && npm install'
                 sh 'cd backend && npm test test/stressTest.test.js'
+
+                sh 'docker-compose down'
                 //sh 'pip install pytest'
                 //sh 'pip install requests'
                 //sh 'pytest api/test_stressTest_app.py'
@@ -96,6 +98,8 @@ pipeline {
 
                         // run integration test                
                         sh 'pytest api/test_integration_app.py'
+
+                        sh 'docker-compose down'
                     }
                 }
                 
@@ -129,6 +133,7 @@ pipeline {
                             }
                         }
                         sh 'cd backend && npm test test/firstIntegration.test.js'
+                        sh 'docker-compose down'
                     }
                 }
                 stage('front integration test'){
@@ -171,7 +176,7 @@ pipeline {
                         //sh 'cd frontend && apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
-                        
+                        sh 'docker-compose down'
                         /*sh """
                         git fetch origin
                         git checkout main
