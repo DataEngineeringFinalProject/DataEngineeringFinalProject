@@ -4,21 +4,31 @@ services:
         container_name: front_container
         environment: 
             - BACKEND_URL=http://localhost:3002
-        build: ./frontend
+        build: ./
         ports:
             - "9080:80"
+        networks:
+            - container_connection
     back:
         #network_mode: "host"
         container_name: back_container
         environment: 
-            - API_URL=http://localhost:5000
+            - API_URL=http://api:5000
             - FRONTEND_URL=http://localhost:9080
         build: ./backend
         ports:
             - "3002:3000"
+        networks:
+            - container_connection
     api:
         #network_mode: "host"
         container_name: api_container
         build: ./api
         ports:
             - "5000:5000"
+        networks:
+            - container_connection
+
+networks:
+    container_connection : 
+        driver: bridge
