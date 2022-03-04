@@ -153,8 +153,6 @@ pipeline {
                         // build the applications and detach
 
                         sh 'docker-compose up --build -d'
-                        sh 'docker ps'
-                        sh 'ip a'
                         sh 'cd frontend && npm install'
                         sh 'cd frontend && npm install cypress'
                         sh 'cd frontend && npx browserslist@latest --update-db'
