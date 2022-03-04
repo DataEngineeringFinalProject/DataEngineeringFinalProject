@@ -69,7 +69,9 @@ pipeline {
                 sh 'git branch -a'
                 sh 'git checkout release_test'
                 sh 'git merge develop_test'
-                sh 'git push -u origin release_test'
+                withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
+					bat 'git push -u origin release_test'
+				}
             }
         }
 
