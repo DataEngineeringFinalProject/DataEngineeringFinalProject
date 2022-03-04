@@ -68,7 +68,7 @@ pipeline {
                 sh 'git branch -a'
                 sh 'git checkout release_test'
                 sh 'git merge develop_test'
-                sh 'git push'
+                sh 'git push -u origin release_test'
             }
         }
 
