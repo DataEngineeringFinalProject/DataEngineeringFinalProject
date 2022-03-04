@@ -57,7 +57,7 @@ pipeline {
                 gir commit -m "add to release"
                 git merge develop
                 """*/ 
-                sh 'git clone https://github.com/maudg94/DataEngineeringFinalProject/DataEngineeringFinalProject.git'
+                sh 'git clone https://github.com/DataEngineeringFinalProject/DataEngineeringFinalProject.git'
                 sh """
                 git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
                 git fetch --all
