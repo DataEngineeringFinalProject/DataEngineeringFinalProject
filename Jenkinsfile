@@ -100,7 +100,7 @@ pipeline {
                     }
                 }*/
                 
-                stage('backend integration test'){
+                /*stage('backend integration test'){
                     agent {
                         docker 'node:latest'
                     }
@@ -114,12 +114,9 @@ pipeline {
                         sh 'docker-compose down'
                         // build the applications and detach
                         sh 'docker-compose up --build -d'
-                        sh 'docker ps'
-                        //sh 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' http://localhost:3002'
                         sh 'cd backend && npm install'
                         sh 'cd backend && npm install mocha --save'
                         sh 'cd backend && npm install chai --save'
-                        sh 'docker ps'
                         script {
                             timeout(125) {
                                 waitUntil {
@@ -130,30 +127,23 @@ pipeline {
                                         return false
                                     }
                                 }
-                                /*waitUntil {
-                                    script {
-                                        def r = sh script: 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' --fail http://192.168.1.35:5000', returnStdout: true
-                                        return (r == 0);
-                                    }
-                                }*/
                             }
                         }
-                        sh 'curl http://192.168.1.35:5000 --header "Content-Type: application/json" --request GET'
                         sh 'cd backend && npm test test/firstIntegration.test.js'
                         /*sh """
                         git fetch origin
                         git checkout main
                         git merge release
-                        """*/
+                        """
                     }
-                }
-                /*stage('front integration test'){
+                }*/
+                stage('front integration test'){
                     agent {
                         docker 'cypress/browsers:chrome69'
                     }
-                   /* when {
+                    /*when {
                         branch 'release'
-                    }
+                    }*/
                     steps {
                         echo "e2e testing"
                         sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
@@ -170,20 +160,14 @@ pipeline {
                         sh 'cd frontend && npx browserslist@latest --update-db'
                         sh 'cd frontend && apt-get install -y libgbm-dev'
                         sh 'curl http://192.168.1.35:5000 --header "Content-Type: application/json" --request GET'
-                        /*script {
+                        script {
                             timeout(125) {
                                 waitUntil {
                                     try {
-                                        sh script: 'curl --header \'"Content-Type: application/json"\' --request POST --data \'{"sent":"sentence test"}\' --fail http://192.168.1.35:5000', returnStdout: true
+                                        sh script: 'curl http://192.168.1.35:5000 --header "Content-Type: application/json" --request GET', returnStdout: true
                                         return true
                                     } catch (exception) {
                                         return false
-                                    }
-                                }
-                                /*waitUntil {
-                                    script {
-                                        def r = sh script: 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' --fail http://192.168.1.35:5000', returnStdout: true
-                                        return (r == 0);
                                     }
                                 }
                             }
@@ -198,9 +182,9 @@ pipeline {
                         git fetch origin
                         git checkout main
                         git merge release
-                        """/
+                        """*/
                     }
-                }*/
+                }
             }
         }
         
