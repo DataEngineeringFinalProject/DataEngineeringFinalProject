@@ -36,7 +36,7 @@ export class AppComponent {
     let headers = new HttpHeaders({'Access-Control-Allow-Origin':'*'});
     headers.set('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
 
-    this.http.post<Data>('http://back:3002', {sent : sentence}, {headers:headers}).subscribe({
+    this.http.post<Data>('http://localhost:3002', {sent : sentence}, {headers:headers}).subscribe({
         next: data => {
           this.data = data;
           console.log(data);
