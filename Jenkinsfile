@@ -55,8 +55,12 @@ pipeline {
                 gir add *
                 gir commit -m "add to release"
                 git merge develop
-                """*/                
-                sh 'git fetch'
+                """*/   
+                sh """
+                git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+                git fetch --all
+                """             
+                //sh 'git fetch'
                 sh 'git pull release_test'
                 sh 'git branch -a'
                 sh 'git checkout release_test'
