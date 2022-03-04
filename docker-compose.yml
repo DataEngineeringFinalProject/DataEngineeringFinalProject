@@ -1,6 +1,5 @@
 services:
     front:
-        #network_mode: "host"
         container_name: front_container
         environment: 
             - BACKEND_URL=http://192.168.1.35:3002
@@ -10,7 +9,6 @@ services:
         networks:
             - container_connection
     back:
-        #network_mode: "host"
         container_name: back_container
         environment: 
             - API_URL=http://api:5000
@@ -21,7 +19,6 @@ services:
         networks:
             - container_connection
     api:
-        #network_mode: "host"
         container_name: api_container
         build: ./api
         ports:

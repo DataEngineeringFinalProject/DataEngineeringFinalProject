@@ -3,7 +3,6 @@ pipeline {
     agent any
 
     stages {
-
         /*stage('unit test') {
             when {
                 expression {
@@ -24,18 +23,13 @@ pipeline {
                 sh 'git fetch origin'
             }
         }*/
-        /*stage('stress test and push to release') {
-            /*when {
+        stage('stress test and push to release') {
+            when {
                 branch 'develop'
             }
-            when {
-                expression {
-                    return branch_name =~ /^features_./
-                }
-            }
             agent { 
-                //docker 'node:latest' 
-                docker 'python:3.8'
+                docker 'node:latest' 
+                //docker 'python:3.8'
             }
             steps {
                 echo "stress testing"
@@ -47,22 +41,28 @@ pipeline {
                 // build the applications and detach
                 sh 'docker-compose up --build -d'
 
-                //sh 'cd backend && npm install'
-                //sh 'cd backend && npm test test/stressTest.test.js'
-                sh 'pip install pytest'
-                sh 'pip install requests'
-                sh 'pytest api/test_stressTest_app.py'
+                sh 'cd backend && npm install'
+                sh 'cd backend && npm test test/stressTest.test.js'
+                //sh 'pip install pytest'
+                //sh 'pip install requests'
+                //sh 'pytest api/test_stressTest_app.py'
                 /*sh """
                 git fetch origin
                 git checkout release
                 gir add *
                 gir commit -m "add to release"
                 git merge develop
-                """/
-            }
-        }*/
+                """*/
 
-        stage('integrationt tests'){
+                /*
+                git fetch origin
+                git checkout release
+                git merge develop
+                */
+            }
+        }
+
+        stage('integrationt tests and push to main'){
             when {
                 expression {
                     return branch_name =~ /^features_.*/
@@ -70,7 +70,7 @@ pipeline {
                 //branch 'release'
             }
             parallel{
-                /*stage('api integration test'){
+                stage('api integration test'){
             
                     agent {
                         docker 'python:3.8'
@@ -98,9 +98,9 @@ pipeline {
                         // run integration test                
                         sh 'pytest api/test_integration_app.py'
                     }
-                }*/
+                }
                 
-                /*stage('backend integration test'){
+                stage('backend integration test'){
                     agent {
                         docker 'node:latest'
                     }
@@ -130,13 +130,8 @@ pipeline {
                             }
                         }
                         sh 'cd backend && npm test test/firstIntegration.test.js'
-                        /*sh """
-                        git fetch origin
-                        git checkout main
-                        git merge release
-                        """
                     }
-                }*/
+                }
                 stage('front integration test'){
                     agent {
                         docker 'cypress/base:latest'
@@ -186,6 +181,11 @@ pipeline {
                     }
                 }
             }
+            /*sh """
+            git fetch origin
+            git checkout main
+            git merge release
+            """*/
         }
         
         stage('deploying') {
