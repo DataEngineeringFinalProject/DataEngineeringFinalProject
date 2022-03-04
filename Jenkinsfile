@@ -38,11 +38,14 @@ pipeline {
                 
                 // down if there are docker still running
                 sh 'docker-compose down'
+                sh 'docker ps'
                 // build the applications and detach
                 sh 'docker-compose up --build -d'
 
                 sh 'cd backend && npm install'
                 sh 'cd backend && npm test test/stressTest.test.js'
+
+                sh 'docker-compose down'
                 //sh 'pip install pytest'
                 //sh 'pip install requests'
                 //sh 'pytest api/test_stressTest_app.py'
@@ -52,10 +55,19 @@ pipeline {
                 gir add *
                 gir commit -m "add to release"
                 git merge develop
-                """*/                
-                sh 'git fetch origin'
-                sh 'git checkout release'
-                sh 'git merge develop'
+                """*/   
+                sh """
+                git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+                git fetch --all
+                """             
+                sh "git config user.email \"maud.glacee@gmail.com\""
+                sh "git config user.name \"maudg94\""
+
+                //sh 'git fetch'
+                sh 'git branch -a'
+                sh 'git checkout release_test'
+                sh 'git merge develop_test'
+                sh 'git push'
             }
         }
 
@@ -95,6 +107,8 @@ pipeline {
 
                         // run integration test                
                         sh 'pytest api/test_integration_app.py'
+
+                        sh 'docker-compose down'
                     }
                 }
                 
@@ -128,6 +142,7 @@ pipeline {
                             }
                         }
                         sh 'cd backend && npm test test/firstIntegration.test.js'
+                        sh 'docker-compose down'
                     }
                 }
                 stage('front integration test'){
@@ -147,8 +162,6 @@ pipeline {
                         // build the applications and detach
 
                         sh 'docker-compose up --build -d'
-                        sh 'docker ps'
-                        sh 'ip a'
                         sh 'cd frontend && npm install'
                         sh 'cd frontend && npm install cypress'
                         sh 'cd frontend && npx browserslist@latest --update-db'
@@ -170,7 +183,7 @@ pipeline {
                         //sh 'cd frontend && apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
-                        
+                        sh 'docker-compose down'
                         /*sh """
                         git fetch origin
                         git checkout main
