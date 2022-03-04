@@ -135,7 +135,7 @@ pipeline {
                                         def r = sh script: 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' --fail http://192.168.1.35:5000', returnStdout: true
                                         return (r == 0);
                                     }
-                                }
+                                }*/
                             }
                         sh 'curl http://192.168.1.35:5000 --header "Content-Type: application/json" --request GET'
                         sh 'cd backend && npm test test/firstIntegration.test.js'
