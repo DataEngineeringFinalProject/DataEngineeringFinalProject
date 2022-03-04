@@ -159,7 +159,6 @@ pipeline {
                         sh 'cd frontend && npm install cypress'
                         sh 'cd frontend && npx browserslist@latest --update-db'
                         sh 'cd frontend && apt-get install -y libgbm-dev'
-                        sh 'curl http://192.168.1.35:5000 --header "Content-Type: application/json" --request GET'
                         script {
                             timeout(125) {
                                 waitUntil {
