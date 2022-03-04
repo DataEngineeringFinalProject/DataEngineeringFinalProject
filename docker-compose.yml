@@ -3,7 +3,7 @@ services:
         #network_mode: "host"
         container_name: front_container
         environment: 
-            - BACKEND_URL=http://back:3000
+            - BACKEND_URL=http://localhost:3002
         build: ./frontend
         ports:
             - "9080:80"
@@ -14,7 +14,7 @@ services:
         container_name: back_container
         environment: 
             - API_URL=http://api:5000
-            - FRONTEND_URL=http://192.168.1.35:9080
+            - FRONTEND_URL=http://front:9080
         build: ./backend
         ports:
             - "3002:3000"
