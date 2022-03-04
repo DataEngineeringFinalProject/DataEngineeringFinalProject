@@ -57,7 +57,6 @@ pipeline {
                 gir commit -m "add to release"
                 git merge develop
                 """*/ 
-                sh 'git clone https://github.com/DataEngineeringFinalProject/DataEngineeringFinalProject.git'
                 sh """
                 git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
                 git fetch --all
@@ -69,7 +68,9 @@ pipeline {
                 sh 'git branch -a'
                 sh 'git checkout release_test'
                 sh 'git merge develop_test'
-                sh 'git push -u origin release_test'
+                withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
+					bat 'git push -u origin release_test'
+				}
             }
         }
 
