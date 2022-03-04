@@ -60,6 +60,9 @@ pipeline {
                 git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
                 git fetch --all
                 """             
+                sh "git config user.email \"maud.glacee@gmail.com\""
+                sh "git config user.name \"maudg94\""
+
                 //sh 'git fetch'
                 sh 'git branch -a'
                 sh 'git checkout release_test'
