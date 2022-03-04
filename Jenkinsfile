@@ -52,22 +52,20 @@ pipeline {
                 gir add *
                 gir commit -m "add to release"
                 git merge develop
-                """*/
-
-                /*
+                """*/                
                 git fetch origin
                 git checkout release
                 git merge develop
-                */
             }
         }
 
         stage('integrationt tests and push to main'){
             when {
-                expression {
-                    return branch_name =~ /^features_.*/
-                }
+                /*expression {
+                    return branch_name =~ /^features_./
+                }*/
                 //branch 'release'
+                branch 'fausseBranche'
             }
             parallel{
                 stage('api integration test'){
