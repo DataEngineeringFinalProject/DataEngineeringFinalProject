@@ -137,6 +137,7 @@ pipeline {
                                     }
                                 }*/
                             }
+                        }
                         sh 'curl http://192.168.1.35:5000 --header "Content-Type: application/json" --request GET'
                         sh 'cd backend && npm test test/firstIntegration.test.js'
                         /*sh """
