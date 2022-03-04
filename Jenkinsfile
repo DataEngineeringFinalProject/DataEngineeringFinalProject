@@ -191,9 +191,7 @@ pipeline {
                 branch 'main'
             }
             steps {
-                echo "Building Artifact"
-
-                echo "Deploying Code"
+                echo "Deploying ..."
             }
         }
     }
