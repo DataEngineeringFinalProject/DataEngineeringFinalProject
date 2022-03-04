@@ -56,7 +56,7 @@ pipeline {
                 gir commit -m "add to release"
                 git merge develop
                 """*/                
-                sh 'git fetch origin'
+                sh 'git fetch'
                 sh 'git branch -a'
                 sh 'git checkout release_test'
                 sh 'git merge develop_test'
