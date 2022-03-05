@@ -64,9 +64,10 @@ pipeline {
                 sh 'git merge develop'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
 					sh 'git push -u origin release'
-				}*/
-                sh 'docker-compose down'
-            }
+				}
+                
+            }*/
+            sh 'docker-compose down'
         }
 
         stage('integrationt tests and push to main'){
