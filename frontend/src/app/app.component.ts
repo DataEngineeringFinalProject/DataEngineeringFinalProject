@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+//import {MetricsComponent} from '@loopback/metrics';
+
 import { Data } from './data.component';
+
 
 @Component({
   selector: 'app-root',
@@ -12,24 +16,23 @@ import { Data } from './data.component';
 export class AppComponent {
   title = 'Toxicity Monitor';
 
-  back = 'http://localhost:3000';
-
   response = ''
   data: Data;
 
 
-
+  component;
   formGroup;
 
   constructor(
-    private formBuilder: FormBuilder, private http: HttpClient
+    private formBuilder: FormBuilder, private http: HttpClient,
   ) { }
     ngOnInit() {
     this.formGroup = this.formBuilder.group({
       sentence:['',[ Validators.required ]]
     });
-  }
+    //this.component(MetricsComponent);
 
+  }
 
   onSubmit(formData) {
     let sentence = formData['sentence'];
@@ -38,7 +41,7 @@ export class AppComponent {
     let headers = new HttpHeaders({'Access-Control-Allow-Origin':'*'});
     headers.set('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
 
-    this.http.post<Data>('http://localhost:3000', {sent : sentence}, {headers:headers}).subscribe({
+    this.http.post<Data>('http://192.168.1.35:3002', {sent : sentence}, {headers:headers}).subscribe({
         next: data => {
           this.data = data;
           console.log(data);

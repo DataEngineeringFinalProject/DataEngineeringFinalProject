@@ -4,12 +4,17 @@ const request = require('request');
 const session = require('express-session');
 const fetch = require('node-fetch');
 const bp = require('body-parser')
+const client = require('prom-client');
+const collectDefaultMetrics = client.collectDefaultMetrics;
+const Registry = client.Registry;
+const register = new Registry();
+collectDefaultMetrics({ register });
 
 var app = express();
 const PORT = 3000;
 const corsOptions = {
     credentials: true,
-    origin: process.env.FRONTEND_URL || 'http://localhost:80',
+    origin: process.env.FRONTEND_URL || 'http://front:80',
     optionsSuccessStatus: 200,
     method : 'POST,GET,PUT,OPTIONS,DELETE'
   }
@@ -31,7 +36,6 @@ app.use(
     })
 );
 
-
 app.post('/', async function(req,res) {
 
     try {
@@ -40,7 +44,7 @@ app.post('/', async function(req,res) {
 
         let sentence = req.body.sent;
         console.log(sentence);
-        const response = await fetch('http://api_container:5000', {
+        const response = await fetch(process.env.API_URL, {
             method: 'post',
             body: JSON.stringify(sentence),
             headers: {'Content-Type': 'application/json'}
@@ -53,6 +57,15 @@ app.post('/', async function(req,res) {
         console.log(error);
     }   
     res.end();
+});
+
+app.get('/metrics', async (req, res) => {
+	try {
+		res.set('Content-Type', register.contentType);
+		res.end(await register.metrics());
+	} catch (ex) {
+		res.status(500).end(ex);
+	}
 });
 
 /*const options = {
