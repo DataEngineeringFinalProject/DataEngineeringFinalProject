@@ -51,8 +51,8 @@ services:
     - /var/run:/var/run:rw
     - /sys:/sys:ro
     - /var/lib/docker/:/var/lib/docker:ro
-    depends_on:
-    - api_container
+    #depends_on:
+    #- api_container
 
   grafana:
     build:
