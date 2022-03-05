@@ -3,6 +3,11 @@ pipeline {
     agent any
 
     stages {
+        stage('down'){
+            steps{
+                sh 'docker-compose down'
+            }
+        }
         /*stage('unit test') {
             when {
                 expression {
@@ -79,7 +84,7 @@ pipeline {
                 /*expression {
                     return branch_name =~ /^features_./
                 }*/
-                branch 'release_test'
+                branch 'release_test1'
                 //branch 'fausseBranche'
             }
             parallel{
@@ -198,7 +203,7 @@ pipeline {
         }
         stage('push to main'){
             when {
-                branch 'release_test'
+                branch 'release_test1'
             }
             steps {
                 sh """
