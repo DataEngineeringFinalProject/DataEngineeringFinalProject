@@ -25,7 +25,7 @@ pipeline {
         }*/
         stage('stress test and push to release') {
             when {
-                branch 'develop_test'
+                branch 'develop'
             }
             agent { 
                 docker 'node:latest' 
@@ -66,10 +66,10 @@ pipeline {
 
                 //sh 'git fetch'
                 sh 'git branch -a'
-                sh 'git checkout release_test'
-                sh 'git merge develop_test'
+                sh 'git checkout release'
+                sh 'git merge develop'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
-					sh 'git push -u origin release_test'
+					sh 'git push -u origin release'
 				}
             }
         }
@@ -79,7 +79,7 @@ pipeline {
                 /*expression {
                     return branch_name =~ /^features_./
                 }*/
-                branch 'release_test'
+                branch 'release'
                 //branch 'fausseBranche'
             }
             parallel{
@@ -198,7 +198,7 @@ pipeline {
         }
         stage('push to main'){
             when {
-                branch 'release_test'
+                branch 'release'
             }
             steps {
                 sh """
@@ -211,7 +211,7 @@ pipeline {
                 //sh 'git fetch'
                 sh 'git branch -a'
                 sh 'git checkout main'
-                sh 'git merge release_test'
+                sh 'git merge release'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
                     sh 'git push -u origin main'
                 }

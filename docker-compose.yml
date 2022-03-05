@@ -4,20 +4,30 @@ services:
   api: 
     build: ./api
     container_name: api_container
+    environment: 
+        - BACKEND_URL=http://192.168.1.35:3002
     ports: 
       - "5000:5000"
+    networks:
+        - container_connection
   back: 
     build: ./backend
     container_name: back_container
     environment: 
-      - "FRONTEND_URL=http://localhost"
+        - API_URL=http://api:5000
+        - FRONTEND_URL=http://192.168.1.35:9080
     ports: 
-      - "3000:3000"
+      - "3002:3000"
+    networks:
+        - container_connection
   front: 
     build: ./frontend
     container_name: front_container
     ports: 
-      - "80:80"
+      - "9080:80"
+    networks:
+        - container_connection
+        
   node_exporter: 
     container_name: node-exporter
     image: prom/node-exporter
@@ -53,6 +63,6 @@ services:
     #volumes:
       #- grafana-data:/var/lib/grafana
 
-    
-
-
+networks:
+    container_connection : 
+        driver: bridge
