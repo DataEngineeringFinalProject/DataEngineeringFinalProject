@@ -24,7 +24,7 @@ pipeline {
             }
         }*/
         stage('stress test and push to release') {
-            when {
+            /*when {
                 branch 'develop'
             }
             agent { 
@@ -50,13 +50,7 @@ pipeline {
                 //sh 'pip install pytest'
                 //sh 'pip install requests'
                 //sh 'pytest api/test_stressTest_app.py'
-                /*sh """
-                git fetch origin
-                git checkout release
-                gir add *
-                gir commit -m "add to release"
-                git merge develop
-                """*/ 
+                
                 sh """
                 git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
                 git fetch --all
@@ -70,7 +64,8 @@ pipeline {
                 sh 'git merge develop'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
 					sh 'git push -u origin release'
-				}
+				}*/
+                sh 'docker-compose down'
             }
         }
 
