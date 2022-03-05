@@ -55,6 +55,9 @@ def create_app():
         INPROGRESS.dec()
         LATENCY.observe(time.time() - start)
         return response
+    @app.teardown_request
+    def teardown_request_func(error=None):
+        INPROGRESS.dec()
 
     @app.route('/metrics')
     def metrics():
