@@ -1,31 +1,58 @@
-services:
-    front:
-        container_name: front_container
-        environment: 
-            - BACKEND_URL=http://192.168.1.35:3002
-        build: ./frontend
-        ports:
-            - "9080:80"
-        networks:
-            - container_connection
-    back:
-        container_name: back_container
-        environment: 
-            - API_URL=http://api:5000
-            - FRONTEND_URL=http://192.168.1.35:9080
-        build: ./backend
-        ports:
-            - "3002:3000"
-        networks:
-            - container_connection
-    api:
-        container_name: api_container
-        build: ./api
-        ports:
-            - "5000:5000"
-        networks:
-            - container_connection
 
-networks:
-    container_connection : 
-        driver: bridge
+version: "2.0"
+services: 
+  api: 
+    build: ./api
+    container_name: api_container
+    ports: 
+      - "5000:5000"
+  back: 
+    build: ./backend
+    container_name: back_container
+    environment: 
+      - "FRONTEND_URL=http://localhost"
+    ports: 
+      - "3000:3000"
+  front: 
+    build: ./frontend
+    container_name: front_container
+    ports: 
+      - "80:80"
+  node_exporter: 
+    container_name: node-exporter
+    image: prom/node-exporter
+    pid: host
+    ports: 
+      - "9100:9100"
+    restart: always
+  prometheus: 
+    build: ./prometheus
+    container_name: prometheus
+    ports: 
+      - "9090:9090"
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+    - 8080:8080
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+    - api_container
+
+  grafana:
+    build:
+      context: ./grafana
+    container_name: grafana
+    ports:
+      - 9000:3000
+    #volumes:
+      #- grafana-data:/var/lib/grafana
+
+    
+
+
