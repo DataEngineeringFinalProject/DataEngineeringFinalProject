@@ -18,7 +18,7 @@ INPROGRESS = Gauge('api_inprogress', 'Number of prediction in progress.')
 LAST = Gauge('api_last_time_seconds', 'The last time api was served.')
 
 LATENCY = Histogram('api_latency_seconds', 'Time for a request predictions.', buckets=[0.0001, 0.0002, 0.0005, 0.001, 0.01, 0.1])
-#METRICS_REQUESTS = }
+
 
 start = time.time()
 def create_app():
