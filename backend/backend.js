@@ -4,11 +4,6 @@ const request = require('request');
 const session = require('express-session');
 const fetch = require('node-fetch');
 const bp = require('body-parser')
-const client = require('prom-client');
-const collectDefaultMetrics = client.collectDefaultMetrics;
-const Registry = client.Registry;
-const register = new Registry();
-collectDefaultMetrics({ register });
 
 var app = express();
 const PORT = 3000;
@@ -57,15 +52,6 @@ app.post('/', async function(req,res) {
         console.log(error);
     }   
     res.end();
-});
-
-app.get('/metrics', async (req, res) => {
-	try {
-		res.set('Content-Type', register.contentType);
-		res.end(await register.metrics());
-	} catch (ex) {
-		res.status(500).end(ex);
-	}
 });
 
 /*const options = {
