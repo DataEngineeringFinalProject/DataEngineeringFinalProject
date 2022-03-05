@@ -1,3 +1,4 @@
+from sys import api_version
 from flask import Flask, request, jsonify, Response
 import numpy as np
 from detoxify import Detoxify
@@ -6,13 +7,13 @@ import time
 from prometheus_client import CollectorRegistry, Summary, Counter, Gauge, Histogram, multiprocess, generate_latest,CONTENT_TYPE_LATEST
 from prometheus_flask_exporter import PrometheusMetrics
 
-REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
+REQUEST_TIME = Summary('api_processing_seconds', 'Time spent processing request')
 
-REQUESTS = Counter('toxic_predict_total', 'Prediction requested')
+REQUESTS = Counter('api_total', 'Prediction requested')
 
-EXCEPTIONS = Counter('toxic_predict_exceptions_total', 'Exceptions serving toxic predictions.')
+EXCEPTIONS = Counter('api_exceptions_total', 'Exceptions serving toxic predictions.')
 
-INPROGRESS = Gauge('prediction_inprogress', 'Number of prediction in progress.')
+INPROGRESS = Gauge('api_inprogress', 'Number of prediction in progress.')
 
 LAST = Gauge('api_last_time_seconds', 'The last time api was served.')
 
@@ -23,14 +24,15 @@ start = time.time()
 def create_app():
     app = Flask(__name__)
     model = Detoxify('original')
-    #metrics = PrometheusMetrics(app)
+    metrics = PrometheusMetrics(app)
 
     @app.before_request
     def before_each_request():
         if request.path == '/':
             REQUESTS.inc()
             INPROGRESS.inc()
-            
+
+    @INPROGRESS.track_inprogress()        
     @REQUEST_TIME.time()
     @app.route('/', methods=['GET', 'POST'])
     def makecalc():
@@ -52,7 +54,7 @@ def create_app():
             if start < 50000:
                 raise Exception
         LAST.set(time.time())
-        INPROGRESS.dec()
+        #INPROGRESS.dec()
         LATENCY.observe(time.time() - start)
         return response
     @app.teardown_request
@@ -61,12 +63,6 @@ def create_app():
 
     @app.route('/metrics')
     def metrics():
-        #with EXCEPTIONS.count_exceptions():
-            #if start < 50000:
-                #raise Exception
-        #LAST.set(time.time())
-        #INPROGRESS.dec()
-        #LATENCY.observe(time.time() - start)
         registry = CollectorRegistry()
         multiprocess.MultiProcessCollector(registry)
         return Response(generate_latest(registry), mimetype=CONTENT_TYPE_LATEST)
