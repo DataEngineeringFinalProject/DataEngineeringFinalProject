@@ -21,7 +21,7 @@ pipeline {
                 sh 'docker-compose down'
                 sh 'docker ps'
                 // build the applications and detach
-                sh 'docker-compose up --build -d'
+                /*sh 'docker-compose up --build -d'
 
                 sh 'cd backend && npm install'
                 sh 'cd backend && npm test test/stressTest.test.js'
@@ -30,13 +30,7 @@ pipeline {
                 //sh 'pip install pytest'
                 //sh 'pip install requests'
                 //sh 'pytest api/test_stressTest_app.py'
-                /*sh """
-                git fetch origin
-                git checkout release
-                gir add *
-                gir commit -m "add to release"
-                git merge develop
-                """*/ 
+                
                 sh 'docker-compose down'
                 sh """
                 git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
@@ -51,15 +45,12 @@ pipeline {
                 sh 'git merge --strategy-option theirs develop_jenkins'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
 					sh 'git push -u --force origin release_jenkins'
-				}
+				}*/
             }
         }
 
-        stage('integrationt tests and push to main'){
+        /*stage('integrationt tests and push to main'){
             when {
-                /*expression {
-                    return branch_name =~ /^features_./
-                }*/
                 branch 'release_jenkins'
                 //branch 'fausseBranche'
             }
@@ -133,9 +124,6 @@ pipeline {
                     agent {
                         docker 'cypress/base:latest'
                     }
-                    /*when {
-                        branch 'release'
-                    }*/
                     steps {
                         echo "e2e testing"
                         sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
@@ -168,11 +156,7 @@ pipeline {
                         sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
                         sh 'docker-compose down'
-                        /*sh """
-                        git fetch origin
-                        git checkout main
-                        git merge release
-                        """*/
+                        
                     }
                 }
             }
@@ -206,6 +190,6 @@ pipeline {
             steps {
                 echo "Deploying ..."
             }
-        }
+        }*/
     }
 }
