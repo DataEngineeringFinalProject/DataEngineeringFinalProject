@@ -33,19 +33,19 @@ services:
     image: prom/node-exporter
     pid: host
     ports: 
-      - "9100:9100"
+      - "9102:9100"
     restart: always
   prometheus: 
     build: ./prometheus
     container_name: prometheus
     ports: 
-      - "9090:9090"
+      - "9092:9090"
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     ports:
-    - 8080:8080
+    - 8082:8080
     volumes:
     - /:/rootfs:ro
     - /var/run:/var/run:rw

@@ -3,29 +3,9 @@ pipeline {
     agent any
 
     stages {
-        /*stage('unit test') {
-            when {
-                expression {
-                    return branch_name =~ /^features_./
-                }
-            }
-            agent {
-                docker 'python:3.8'
-            }
-            steps {
-                echo "running unit test"
-                sh 'pip install pytest'
-                sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
-                sh 'pip3 install detoxify'
-                sh 'dir'
-                sh 'pytest api/test_unit_app.py'
-
-                sh 'git fetch origin'
-            }
-        }*/
         stage('stress test and push to release') {
-            /*when {
-                branch 'develop'
+            when {
+                branch 'develop_jen'
             }
             agent { 
                 docker 'node:latest' 
@@ -60,15 +40,12 @@ pipeline {
 
                 //sh 'git fetch'
                 sh 'git branch -a'
-                sh 'git checkout release'
-                sh 'git merge develop'
+                sh 'git checkout release_jen'
+                sh 'git merge develop_jen'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
-					sh 'git push -u origin release'
+					sh 'git push -u origin release_jen'
 				}
                 
-            }*/
-            steps {
-                sh 'docker-compose down'
             }
         }
 
@@ -77,7 +54,7 @@ pipeline {
                 /*expression {
                     return branch_name =~ /^features_./
                 }*/
-                branch 'release'
+                branch 'release_jen'
                 //branch 'fausseBranche'
             }
             parallel{
@@ -196,7 +173,7 @@ pipeline {
         }
         stage('push to main'){
             when {
-                branch 'release'
+                branch 'release_jen'
             }
             steps {
                 sh """
@@ -208,10 +185,10 @@ pipeline {
 
                 //sh 'git fetch'
                 sh 'git branch -a'
-                sh 'git checkout main'
-                sh 'git merge release'
+                sh 'git checkout main_jen'
+                sh 'git merge release_jen'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
-                    sh 'git push -u origin main'
+                    sh 'git push -u origin main_jen'
                 }
             }
         }
