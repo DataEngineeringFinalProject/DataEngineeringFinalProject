@@ -164,11 +164,6 @@ pipeline {
                         sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
                         sh 'docker-compose down'
-                        /*sh """
-                        git fetch origin
-                        git checkout main
-                        git merge release
-                        """*/
                     }
                 }
             }
@@ -212,18 +207,5 @@ pipeline {
             sh 'docker-compose down'
         }
     }
-    /*
-    stages {
-        stage('down all'){
-            when {
-                branch 'release_jen'
-            }
-            steps{
-                sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
-                sh 'chmod +x /usr/local/bin/docker-compose'
-                sh 'docker-compose down'
-            }
-        }
-    }
-    */
+    
 }
