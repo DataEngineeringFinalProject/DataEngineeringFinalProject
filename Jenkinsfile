@@ -81,7 +81,7 @@ pipeline {
                         sh 'pip install pandas'
                         sh 'pip install Flask==2.0.1'
                         sh 'pip install prometheus_client==0.13.1'
-                        sh 'pip install prometheus_flask_exporter == 0.18.7'
+                        sh 'pip install prometheus-flask-exporter'
                         sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
                         sh 'pip3 install detoxify'
 
@@ -144,6 +144,8 @@ pipeline {
                         sh 'docker-compose up --build -d'
                         sh 'cd frontend && npm cache clean --force'
                         sh 'cd frontend && npm install'
+                        //sh 'cd frontend && apt-get remove nodejs'
+                        //sh 'cd frontend && apt-get install nodejs'
                         sh 'cd frontend && npm install cypress'
                         sh 'cd frontend && npx browserslist@latest --update-db'
                         sh 'cd frontend && apt-get install -y libgbm-dev'
