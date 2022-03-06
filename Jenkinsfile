@@ -3,29 +3,9 @@ pipeline {
     agent any
 
     stages {
-        /*stage('unit test') {
-            when {
-                expression {
-                    return branch_name =~ /^features_./
-                }
-            }
-            agent {
-                docker 'python:3.8'
-            }
-            steps {
-                echo "running unit test"
-                sh 'pip install pytest'
-                sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
-                sh 'pip3 install detoxify'
-                sh 'dir'
-                sh 'pytest api/test_unit_app.py'
-
-                sh 'git fetch origin'
-            }
-        }*/
         stage('stress test and push to release') {
             when {
-                branch 'develop_test'
+                branch 'develop_jenkins'
             }
             agent { 
                 docker 'node:latest' 
@@ -46,7 +26,7 @@ pipeline {
                 sh 'cd backend && npm install'
                 sh 'cd backend && npm test test/stressTest.test.js'
 
-                sh 'docker-compose down'
+                //sh 'docker-compose down'
                 //sh 'pip install pytest'
                 //sh 'pip install requests'
                 //sh 'pytest api/test_stressTest_app.py'
@@ -66,10 +46,10 @@ pipeline {
 
                 //sh 'git fetch'
                 sh 'git branch -a'
-                sh 'git checkout release_test'
-                sh 'git merge develop_test'
+                sh 'git checkout release_jenkins'
+                sh 'git merge develop_jenkins'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
-					sh 'git push -u origin release_test'
+					sh 'git push -u origin release_jenkins'
 				}
             }
         }
@@ -79,7 +59,7 @@ pipeline {
                 /*expression {
                     return branch_name =~ /^features_./
                 }*/
-                branch 'release_test'
+                branch 'release_jenkins'
                 //branch 'fausseBranche'
             }
             parallel{
@@ -198,7 +178,7 @@ pipeline {
         }
         stage('push to main'){
             when {
-                branch 'release_test'
+                branch 'release_jenkins'
             }
             steps {
                 sh """
@@ -211,7 +191,7 @@ pipeline {
                 //sh 'git fetch'
                 sh 'git branch -a'
                 sh 'git checkout main'
-                sh 'git merge release_test'
+                sh 'git merge release_jenkins'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
                     sh 'git push -u origin main'
                 }
