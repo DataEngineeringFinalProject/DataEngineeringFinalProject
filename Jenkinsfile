@@ -40,6 +40,7 @@ pipeline {
 
                 //sh 'git fetch'
                 sh 'git branch -a'
+                sh 'git merge -s ours release_jen'
                 sh 'git checkout release_jen'
                 sh 'git merge develop_jen'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
@@ -185,6 +186,7 @@ pipeline {
 
                 //sh 'git fetch'
                 sh 'git branch -a'
+                sh 'git merge -s ours main_jen'
                 sh 'git checkout main_jen'
                 sh 'git merge release_jen'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
