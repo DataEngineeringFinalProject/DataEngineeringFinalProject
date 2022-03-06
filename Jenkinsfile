@@ -37,6 +37,7 @@ pipeline {
                 gir commit -m "add to release"
                 git merge develop
                 """*/ 
+                sh 'docker-compose down'
                 sh """
                 git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
                 git fetch --all
