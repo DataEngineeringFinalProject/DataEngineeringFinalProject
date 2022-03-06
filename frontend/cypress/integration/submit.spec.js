@@ -1,5 +1,5 @@
 describe('Toxicity', () => {
-    beforeEach(() => { cy.visit('http://192.168.1.35:9080/');
+    beforeEach(() => { cy.visit('http://localhost:9080/');
     cy.get('#identity').should('be.empty')
     cy.get('#insult').should('be.empty')
     cy.get('#obscene').should('be.empty')
@@ -20,4 +20,4 @@ describe('Toxicity', () => {
     })
 
     })
- 
+
