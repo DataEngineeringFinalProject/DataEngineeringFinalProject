@@ -142,10 +142,10 @@ pipeline {
                         // build the applications and detach
 
                         sh 'docker-compose up --build -d'
-                        sh 'cd frontend && npm cache clean --force'
-                        sh 'cd frontend && npm install'
-                        //sh 'cd frontend && apt-get remove nodejs'
-                        //sh 'cd frontend && apt-get install nodejs'
+                        //sh 'cd frontend && npm cache clean --force'
+                        //sh 'cd frontend && npm install'
+                        sh 'cd frontend && apt-get remove nodejs'
+                        sh 'cd frontend && apt-get install nodejs'
                         sh 'cd frontend && npm install cypress'
                         sh 'cd frontend && npx browserslist@latest --update-db'
                         sh 'cd frontend && apt-get install -y libgbm-dev'
