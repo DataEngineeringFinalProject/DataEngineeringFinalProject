@@ -9,7 +9,6 @@ pipeline {
             }
             agent { 
                 docker 'node:latest' 
-                //docker 'python:3.8'
             }
             steps {
                 //git([url:'git@github.com:maudg94/DataEngineeringFinalProject/DataEngineeringFinalProject.git', branch:"develop_test"])
