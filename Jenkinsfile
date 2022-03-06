@@ -11,26 +11,27 @@ pipeline {
                 docker 'node:latest' 
             }
             steps {
+                // if you have issue with remaining ghost container, you can uncomment this on push 
                 //sh 'docker stop api_container back_container front_container node-exporter prometheus_maud grafana_maud cadvisor && docker rm api_container back_container front_container node-exporter prometheus_maud grafana_maud cadvisor'
-                //git([url:'git@github.com:maudg94/DataEngineeringFinalProject/DataEngineeringFinalProject.git', branch:"develop_test"])
+                
                 echo "stress testing"
                 sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
                 sh 'chmod +x /usr/local/bin/docker-compose'
                 
                 // down if there are docker still running
                 sh 'docker-compose down'
-                sh 'docker ps'
                 // build the applications and detach
                 sh 'docker-compose up --build -d'
 
+                // install dependency
                 sh 'cd backend && npm install'
+
+                // run stress test
                 sh 'cd backend && npm test test/stressTest.test.js'
 
                 sh 'docker-compose down'
-                //sh 'pip install pytest'
-                //sh 'pip install requests'
-                //sh 'pytest api/test_stressTest_app.py'
                 
+                // git automation
                 sh """
                 git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
                 git fetch --all
@@ -38,7 +39,6 @@ pipeline {
                 sh "git config user.email \"maud.glacee@gmail.com\""
                 sh "git config user.name \"maudg94\""
 
-                //sh 'git fetch'
                 sh 'git branch -a'
                 sh 'git merge -s ours release_jen'
                 sh 'git checkout release_jen'
@@ -52,11 +52,7 @@ pipeline {
 
         stage('integrationt tests and push to main'){
             when {
-                /*expression {
-                    return branch_name =~ /^features_./
-                }*/
                 branch 'release_jen'
-                //branch 'fausseBranche'
             }
             parallel{
                 stage('api integration test'){
@@ -130,9 +126,6 @@ pipeline {
                     agent {
                         docker 'cypress/base:latest'
                     }
-                    /*when {
-                        branch 'release'
-                    }*/
                     steps {
                         echo "e2e testing"
                         sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
@@ -141,14 +134,14 @@ pipeline {
                         // down if there are docker still running
                         sh 'docker-compose down'
                         // build the applications and detach
-
                         sh 'docker-compose up --build -d'
+
+                        // to uncomment if you have missing dependencies
                         //sh 'cd frontend && npm cache clean --force'
                         //sh 'cd frontend && npm install'
-                        //sh 'cd frontend && apt-get remove nodejs'
-                        //sh 'cd frontend && apt-get install nodejs'
                         //sh 'cd frontend && npm install cypress'
                         //sh 'cd frontend && npx browserslist@latest --update-db'
+
                         sh 'cd frontend && apt-get install -y libgbm-dev'
                         script {
                             timeout(125) {
@@ -162,9 +155,7 @@ pipeline {
                                 }
                             }
                         }
-                        //sh 'curl --header "Content-Type: application/json" --request POST --data \'{"sent":"sentence test"}\' http://localhost:3002'
 
-                        //sh 'cd frontend && apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/title.spec.js'
                         sh 'cd frontend && npx cypress run --spec cypress/integration/submit.spec.js'
                         sh 'docker-compose down'
@@ -178,6 +169,7 @@ pipeline {
                 branch 'release_jen'
             }
             steps {
+                // git automation
                 sh """
                 git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
                 git fetch --all
@@ -185,9 +177,9 @@ pipeline {
                 sh "git config user.email \"maud.glacee@gmail.com\""
                 sh "git config user.name \"maudg94\""
 
-                //sh 'git fetch'
+                sh 'git fetch'
                 sh 'git branch -a'
-                sh 'git merge -s ours origin main_jen'
+                sh 'git merge -s ours main_jen'
                 sh 'git checkout main_jen'
                 sh 'git merge release_jen'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
@@ -201,6 +193,7 @@ pipeline {
                 branch 'main_jen'
             }
             steps {
+                // since we are
                 echo "Deploying ..."
             }
         }
