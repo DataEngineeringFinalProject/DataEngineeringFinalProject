@@ -26,7 +26,7 @@ scrape_configs:
     static_configs:
       - targets:
         - cadvisor:8080
-  - job_name: 'prometheus'
+  - job_name: 'prometheus_maud'
     static_configs:
       - targets:
         - 'localhost:9090'

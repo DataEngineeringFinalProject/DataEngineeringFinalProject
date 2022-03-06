@@ -35,7 +35,7 @@ services:
     ports: 
       - "9102:9100"
     restart: always
-  prometheus: 
+  prometheus_maud: 
     build: ./prometheus
     container_name: prometheus
     ports: 
@@ -54,7 +54,7 @@ services:
     #depends_on:
     #- api_container
 
-  grafana:
+  grafana_maud:
     build:
       context: ./grafana
     container_name: grafana
