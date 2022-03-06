@@ -81,6 +81,7 @@ pipeline {
                         sh 'pip install numpy'
                         sh 'pip install pandas'
                         sh 'pip install Flask==2.0.1'
+                        sh 'pip install prometheus_client==0.13.1'
                         sh 'pip install --find-links https://download.pytorch.org/whl/torch_stable.html torch==1.9.0+cpu torchvision==0.10.0+cpu'
                         sh 'pip3 install detoxify'
 
