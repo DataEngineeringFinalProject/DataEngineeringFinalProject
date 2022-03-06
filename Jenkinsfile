@@ -48,7 +48,7 @@ pipeline {
                 //sh 'git fetch'
                 sh 'git branch -a'
                 sh 'git checkout release_jenkins'
-                sh 'git merge -s recursive -Xtheirs develop_jenkins'
+                sh 'git merge --strategy-option theirs develop_jenkins'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
 					sh 'git push -u origin release_jenkins'
 				}
