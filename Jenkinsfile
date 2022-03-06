@@ -44,7 +44,7 @@ pipeline {
                 sh 'git checkout release_jen'
                 sh 'git merge develop_jen'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
-					sh 'git push -u origin release_jen'
+					sh 'git push -u origin release_jen --force'
 				}
                 
             }
@@ -168,7 +168,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('push to main'){
             when {
                 branch 'release_jen'
@@ -187,7 +187,7 @@ pipeline {
                 sh 'git checkout main_jen'
                 sh 'git merge release_jen'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
-                    sh 'git push -u origin main_jen'
+                    sh 'git push -u origin main_jen --force'
                 }
             }
         }
