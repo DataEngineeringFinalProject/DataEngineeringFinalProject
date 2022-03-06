@@ -42,9 +42,6 @@ pipeline {
 				}
                 
             }
-            steps {
-                sh 'docker-compose down'
-            }
         }
 
         stage('integrationt tests and push to main'){
