@@ -35,11 +35,15 @@ services:
     ports: 
       - "9100:9100"
     restart: always
+    networks:
+      - container_connection
   prometheus: 
     build: ./prometheus
     container_name: prometheus
     ports: 
       - "9090:9090"
+    networks:
+      - container_connection
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
@@ -53,6 +57,8 @@ services:
     - /var/lib/docker/:/var/lib/docker:ro
     #depends_on:
     #- api_container
+    networks:
+      - container_connection
 
   grafana:
     build:
@@ -62,6 +68,8 @@ services:
       - 9000:3000
     #volumes:
       #- grafana-data:/var/lib/grafana
+    networks:
+      - container_connection
 
 networks:
     container_connection : 
