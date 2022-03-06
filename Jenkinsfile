@@ -50,7 +50,7 @@ pipeline {
                 sh 'git checkout release_jenkins'
                 sh 'git merge --strategy-option theirs develop_jenkins'
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'git-tool')]) {
-					sh 'git push -u origin release_jenkins'
+					sh 'git push -u --force origin release_jenkins'
 				}
             }
         }
