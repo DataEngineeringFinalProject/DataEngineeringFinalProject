@@ -37,7 +37,7 @@ services:
     restart: always
   prometheus_maud: 
     build: ./prometheus
-    container_name: prometheus
+    container_name: prometheus_maud
     ports: 
       - "9092:9090"
 
@@ -57,7 +57,7 @@ services:
   grafana_maud:
     build:
       context: ./grafana
-    container_name: grafana
+    container_name: grafana_maud
     ports:
       - 9000:3000
     #volumes:
