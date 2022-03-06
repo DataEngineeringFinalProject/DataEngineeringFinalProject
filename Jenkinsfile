@@ -11,7 +11,7 @@ pipeline {
                 docker 'node:latest' 
             }
             steps {
-                //sh 'docker stop api_container back_containerfront_container node-exporter prometheus_maud grafana_maud cadvisor && docker rm api_container back_containerfront_container node-exporter prometheus_maud grafana_maud cadvisor'
+                sh 'docker stop api_container back_containerfront_container node-exporter prometheus_maud grafana_maud cadvisor && docker rm api_container back_containerfront_container node-exporter prometheus_maud grafana_maud cadvisor'
                 //git([url:'git@github.com:maudg94/DataEngineeringFinalProject/DataEngineeringFinalProject.git', branch:"develop_test"])
                 echo "stress testing"
                 sh 'curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
@@ -148,7 +148,7 @@ pipeline {
                         //sh 'cd frontend && apt-get remove nodejs'
                         //sh 'cd frontend && apt-get install nodejs'
                         //sh 'cd frontend && npm install cypress'
-                        sh 'cd frontend && npx browserslist@latest --update-db'
+                        //sh 'cd frontend && npx browserslist@latest --update-db'
                         sh 'cd frontend && apt-get install -y libgbm-dev'
                         script {
                             timeout(125) {
