@@ -1,6 +1,6 @@
 services:
     front:
-        container_name: front_container_maud
+        container_name: front_container_maud_jen
         environment: 
             - BACKEND_URL=http://192.168.1.35:3002
         build: ./frontend
@@ -9,7 +9,7 @@ services:
         networks:
             - container_connection
     back:
-        container_name: back_container_maud
+        container_name: back_container_maud_jen
         environment: 
             - API_URL=http://api:5000
             - FRONTEND_URL=http://192.168.1.35:9080
@@ -19,7 +19,7 @@ services:
         networks:
             - container_connection
     api:
-        container_name: api_container_maud
+        container_name: api_container_maud_jen
         build: ./api
         ports:
             - "5000:5000"
